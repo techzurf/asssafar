@@ -3,13 +3,35 @@ import { ShieldCheck, Award, FileCheck } from 'lucide-react';
 
 interface LicenseBadgeProps {
   className?: string;
-  variant?: 'card' | 'compact' | 'footer';
+  variant?: 'card' | 'compact' | 'footer' | 'hanging';
 }
 
 export const LicenseBadge: React.FC<LicenseBadgeProps> = ({
   className = '',
   variant = 'card',
 }) => {
+  if (variant === 'hanging') {
+    return (
+      <div className={`hanging-license-wrapper flex flex-col items-center pointer-events-none ${className}`}>
+        {/* One Single Thin Chain suspended from top edge */}
+        <div className="w-[1.5px] h-2.5 sm:h-3.5 bg-gradient-to-b from-[#64748B] to-[#94A3B8] shadow-2xs" />
+
+        {/* Small, Minimal, Elegant Tag */}
+        <div className="hanging-license-tag pointer-events-auto bg-white/95 backdrop-blur-xs border border-[#E2E8F0] shadow-xs rounded-md px-2 sm:px-2.5 py-0.5 sm:py-1 flex items-center gap-1 sm:gap-1.5 transition-transform duration-200 hover:scale-102">
+          <ShieldCheck className="w-3 h-3 text-[#475569] shrink-0" />
+          <div className="flex items-center gap-1">
+            <span className="text-[9px] sm:text-[10px] text-[#64748B] font-medium hidden sm:inline">
+              Reg:
+            </span>
+            <code className="text-[9px] sm:text-[11px] font-bold font-mono text-[#1F2937] tracking-tight whitespace-nowrap select-all">
+              TN03786327/Cat-II/29848/2027
+            </code>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (variant === 'compact' || variant === 'footer') {
     return (
       <div

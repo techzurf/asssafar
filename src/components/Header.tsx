@@ -18,6 +18,7 @@ import { PageRoute } from '../routes';
 import { TopAnnouncementBar } from './TopAnnouncementBar';
 import { AnimatedEnquireButton } from './AnimatedEnquireButton';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { LicenseBadge } from './LicenseBadge';
 import { useLanguage } from '../context/LanguageContext';
 
 interface HeaderProps {
@@ -202,6 +203,11 @@ export const Header: React.FC<HeaderProps> = ({
             : 'bg-[#FFFFFF] border-b border-[#E5E5E0] py-4'
         }`}
       >
+        {/* Hanging License Tag suspended from top edge below announcement bar */}
+        <div className="absolute right-3 sm:right-8 lg:right-16 top-0 z-30 pointer-events-none">
+          <LicenseBadge variant="hanging" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Zone 1: Brand Logo */}
@@ -216,7 +222,9 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B5D4B] rounded-xl shrink-0"
               aria-label="As-Safar Home"
             >
-
+              <div className="as-safar-logo-frame">
+                <Logo className="h-10 sm:h-12 md:h-14 w-auto object-contain" loading="eager" />
+              </div>
             </a>
 
             {/* Zone 2: Navigation Links (Desktop 1024px+) */}

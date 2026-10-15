@@ -442,24 +442,21 @@
   isolation: isolate;
   overflow: hidden;
   border-radius: 12px;
-  padding: 3px;
-  background: #0b6654;
+  padding: 2.5px 6px;
+  background: transparent;
 }
 
-/* Rotating gradient */
+/* Rotating multicolor gradient using blue (#00B7FF), magenta (#FF30FF), gold (#C9973D) */
 .as-safar-logo-frame::before {
   content: "";
   position: absolute;
-  left: calc(50% - 30px);
-  top: calc(50% - 85px);
-  width: 60px;
-  height: 170px;
-  background-image: linear-gradient(
-    180deg,
-    #0b6654,
-    #c9973d,
-    #f5d58a,
-    #0b6654
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    #00B7FF 0%,
+    #FF30FF 33%,
+    #C9973D 66%,
+    #00B7FF 100%
   );
   animation: asSafarLogoRotate 3s linear infinite;
   transform-origin: center;
@@ -467,13 +464,13 @@
   pointer-events: none;
 }
 
-/* Inner surface behind the logo */
+/* Solid white inner surface keeping logo background clean and readable */
 .as-safar-logo-frame::after {
   content: "";
   position: absolute;
-  inset: 2px;
+  inset: 2.5px;
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 9.5px;
   z-index: -1;
   pointer-events: none;
 }
@@ -482,16 +479,9 @@
   position: relative;
   display: block;
   max-width: 100%;
-  height: 2.5rem;
   width: auto;
   object-fit: contain;
   z-index: 1;
-}
-
-@media (min-width: 640px) {
-  .as-safar-logo-frame img {
-    height: 3rem;
-  }
 }
 
 @keyframes asSafarLogoRotate {
@@ -617,6 +607,30 @@
     animation: none;
   }
 }
+
+/* ==========================================================================
+   Subtle 1.5 degree Swinging Animation for Hanging License Tag
+   ========================================================================== */
+@keyframes subtleHangingSwing {
+  0%, 100% {
+    transform: rotate(-1.5deg);
+  }
+  50% {
+    transform: rotate(1.5deg);
+  }
+}
+
+.hanging-license-wrapper {
+  transform-origin: top center;
+  animation: subtleHangingSwing 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hanging-license-wrapper {
+    animation: none !important;
+  }
+}
+
 
 
 
