@@ -13,8 +13,8 @@ export const LicenseBadge: React.FC<LicenseBadgeProps> = ({
   if (variant === 'hanging') {
     return (
       <div className={`hanging-license-wrapper flex flex-col items-center pointer-events-none ${className}`}>
-        {/* One Single Thin Chain extended vertically downward to overlap top of hero slider */}
-        <div className="w-[1.5px] h-[38px] sm:h-[52px] md:h-[66px] lg:h-[70px] bg-gradient-to-b from-[#64748B] via-[#94A3B8] to-[#CBD5E1] shadow-2xs" />
+        {/* One Single Thin Chain extended vertically downward by 30% */}
+        <div className="w-[1.5px] h-[60px] sm:h-[81px] md:h-[103px] lg:h-[109px] bg-gradient-to-b from-[#64748B] via-[#94A3B8] to-[#CBD5E1] shadow-2xs" />
 
         {/* Small, Minimal, Elegant Tag hanging across white header and top of hero slider */}
         <div className="hanging-license-tag pointer-events-auto bg-white/95 backdrop-blur-xs border border-[#E2E8F0] shadow-xs rounded-md px-1.5 sm:px-2.5 py-0.5 sm:py-1 flex items-center gap-1 sm:gap-1.5 transition-transform duration-200 hover:scale-102">

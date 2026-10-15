@@ -411,28 +411,9 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
 
             {/* Zone 3: Primary Actions */}
-            <div className="flex items-center gap-1.5 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Language Switcher Component */}
               <LanguageSwitcher />
-
-              {/* Quick action call & WhatsApp buttons - Visible on desktop (lg:flex), Hidden on mobile (< lg) */}
-              <a
-                href={`tel:${BRAND_INFO.phoneTel}`}
-                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] hover:bg-[#0B5D4B] hover:text-white transition-colors"
-                aria-label="Call As-Safar"
-              >
-                <Phone className="w-4 h-4 text-[#C9A24D]" />
-              </a>
-
-              <a
-                href={`https://wa.me/919566369654?text=${encodeURIComponent(BRAND_INFO.whatsappMessage)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] hover:bg-[#0B5D4B] hover:text-white transition-colors"
-                aria-label="WhatsApp As-Safar"
-              >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              </a>
 
               {/* Primary Action Button (Custom Package with scramble & shimmer animation) */}
               <div className="hidden sm:block">
