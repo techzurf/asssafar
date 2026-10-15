@@ -43,18 +43,36 @@ export const AirplaneCursor: React.FC = () => {
     setIsEnabled(true);
     document.documentElement.classList.add('airplane-cursor-enabled');
 
+    const checkInteractive = (target: HTMLElement | null): boolean => {
+      if (!target) return false;
+      const interactiveSelector =
+        'a, button, [role="button"], [role="tab"], [role="link"], [role="menuitem"], [role="option"], input, select, textarea, summary, label, .clickable, .cursor-pointer, .umrah-package-card, .google-reviews-card, [onclick], [onClick], [data-interactive="true"]';
+      let isInteractive = Boolean(target.closest(interactiveSelector));
+
+      if (!isInteractive) {
+        try {
+          const computedCursor = window.getComputedStyle(target).cursor;
+          if (computedCursor === 'pointer' || computedCursor === 'text') {
+            isInteractive = true;
+          }
+        } catch {
+          // ignore
+        }
+      }
+      return isInteractive;
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
       setIsVisible(true);
 
-      // Check if hovering over an interactive element
       const target = e.target as HTMLElement | null;
-      if (target) {
-        const isInteractive = Boolean(
-          target.closest('a, button, [role="button"], [role="tab"], input, select, textarea, summary, label, .clickable, [onclick]')
-        );
-        setIsHovering(isInteractive);
-      }
+      setIsHovering(checkInteractive(target));
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      setIsHovering(checkInteractive(target));
     };
 
     const handleMouseDown = () => setIsClicking(true);
@@ -68,6 +86,7 @@ export const AirplaneCursor: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
     window.addEventListener('mousedown', handleMouseDown, { passive: true });
     window.addEventListener('mouseup', handleMouseUp, { passive: true });
     document.addEventListener('mouseenter', handleMouseEnter);
@@ -201,6 +220,7 @@ export const AirplaneCursor: React.FC = () => {
         cancelAnimationFrame(animFrameId.current);
       }
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseenter', handleMouseEnter);
@@ -224,8 +244,8 @@ export const AirplaneCursor: React.FC = () => {
         ref={trailCanvasRef}
         className="absolute inset-0 pointer-events-none"
         style={{
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 250ms ease-out',
+          opacity: isVisible && !isHovering ? 1 : 0,
+          transition: 'opacity 150ms ease-out',
         }}
       />
 
@@ -234,26 +254,15 @@ export const AirplaneCursor: React.FC = () => {
         ref={cursorRef}
         className="absolute top-0 left-0 -ml-[14px] -mt-[14px] w-[28px] h-[28px] pointer-events-none will-change-transform"
         style={{
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 200ms ease-out',
+          opacity: isVisible && !isHovering ? 1 : 0,
+          transition: 'opacity 150ms ease-out',
         }}
       >
         <div
           className={`w-full h-full flex items-center justify-center transition-transform duration-200 ease-out ${
-            isClicking
-              ? 'scale-90'
-              : isHovering
-              ? 'scale-125'
-              : 'scale-100'
+            isClicking ? 'scale-90' : 'scale-100'
           }`}
         >
-          {/* Subtle Engine Glow / Hover Halo */}
-          {isHovering && (
-            <div
-              className="absolute inset-[-4px] rounded-full bg-gradient-to-r from-[#C9973D]/35 to-[#F5D58A]/45 blur-[4px] animate-pulse pointer-events-none"
-            />
-          )}
-
           {/* Premium As-Safar Airplane SVG */}
           <svg
             width="28"

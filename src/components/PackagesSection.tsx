@@ -153,9 +153,32 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
             <span>{t('pkg.badge')}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
-            {t('pkg.heading')}
-          </h2>
+          {/* Animated Multicolor Heading */}
+          <div className="journey-heading text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+            <h2 className="journey-heading-base text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              {t('pkg.heading')}
+            </h2>
+            <svg
+              className="journey-heading-outline"
+              aria-hidden="true"
+            >
+              <text textAnchor="middle" x="50%" y="50%" dominantBaseline="central">
+                {t('pkg.heading')}
+              </text>
+              <text textAnchor="middle" x="50%" y="50%" dominantBaseline="central">
+                {t('pkg.heading')}
+              </text>
+              <text textAnchor="middle" x="50%" y="50%" dominantBaseline="central">
+                {t('pkg.heading')}
+              </text>
+              <text textAnchor="middle" x="50%" y="50%" dominantBaseline="central">
+                {t('pkg.heading')}
+              </text>
+              <text textAnchor="middle" x="50%" y="50%" dominantBaseline="central">
+                {t('pkg.heading')}
+              </text>
+            </svg>
+          </div>
 
           <p className="text-[#333333] text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
             {t('pkg.sub')}

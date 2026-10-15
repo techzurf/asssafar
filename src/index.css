@@ -521,22 +521,120 @@
   }
 }
 
-/* Custom Airplane Cursor - Hide default OS pointer on fine-pointer devices */
+/* Custom Airplane Cursor - Hide default OS pointer on normal page areas, restore standard cursors on interactive elements */
 @media (hover: hover) and (pointer: fine) {
   html.airplane-cursor-enabled,
-  html.airplane-cursor-enabled body,
+  html.airplane-cursor-enabled body {
+    cursor: none;
+  }
+
   html.airplane-cursor-enabled a,
   html.airplane-cursor-enabled button,
   html.airplane-cursor-enabled [role="button"],
+  html.airplane-cursor-enabled [role="tab"],
+  html.airplane-cursor-enabled [role="link"],
+  html.airplane-cursor-enabled [role="menuitem"],
+  html.airplane-cursor-enabled [role="option"],
   html.airplane-cursor-enabled select,
   html.airplane-cursor-enabled summary,
-  html.airplane-cursor-enabled label {
-    cursor: none !important;
+  html.airplane-cursor-enabled label,
+  html.airplane-cursor-enabled .clickable,
+  html.airplane-cursor-enabled .cursor-pointer,
+  html.airplane-cursor-enabled .umrah-package-card,
+  html.airplane-cursor-enabled .google-reviews-card,
+  html.airplane-cursor-enabled [onclick],
+  html.airplane-cursor-enabled [onClick],
+  html.airplane-cursor-enabled [data-interactive="true"] {
+    cursor: pointer !important;
   }
 
+  html.airplane-cursor-enabled input[type="text"],
+  html.airplane-cursor-enabled input[type="email"],
+  html.airplane-cursor-enabled input[type="tel"],
+  html.airplane-cursor-enabled input[type="number"],
+  html.airplane-cursor-enabled input[type="search"],
+  html.airplane-cursor-enabled input[type="url"],
+  html.airplane-cursor-enabled input[type="password"],
   html.airplane-cursor-enabled input,
   html.airplane-cursor-enabled textarea {
     cursor: text !important;
+  }
+}
+
+/* Animated multicolor outline — Choose Your Sacred Journey only */
+.journey-heading {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.journey-heading .journey-heading-base {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #111827;
+}
+
+.journey-heading .journey-heading-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.journey-heading .journey-heading-outline text {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 70 330;
+  stroke-dashoffset: 0;
+  animation: journeyHeadingStroke 6s linear infinite;
+}
+
+.journey-heading .journey-heading-outline text:nth-child(1) {
+  stroke: #F2385A;
+  animation-delay: -1.2s;
+}
+
+.journey-heading .journey-heading-outline text:nth-child(2) {
+  stroke: #F5A503;
+  animation-delay: -2.4s;
+}
+
+.journey-heading .journey-heading-outline text:nth-child(3) {
+  stroke: #E9F1DF;
+  animation-delay: -3.6s;
+}
+
+.journey-heading .journey-heading-outline text:nth-child(4) {
+  stroke: #56D9CD;
+  animation-delay: -4.8s;
+}
+
+.journey-heading .journey-heading-outline text:nth-child(5) {
+  stroke: #3AA1BF;
+  animation-delay: -6s;
+}
+
+@keyframes journeyHeadingStroke {
+  100% {
+    stroke-dashoffset: -400;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-heading .journey-heading-outline text {
+    animation: none;
   }
 }
 
