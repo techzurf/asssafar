@@ -45,7 +45,7 @@ export const ContactSection: React.FC = () => {
             <span>Personalized Trichy Guidance</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Ready to Begin Your Umrah Journey?
           </h2>
 
@@ -60,7 +60,7 @@ export const ContactSection: React.FC = () => {
               className="bg-[#0B5D4B] hover:bg-[#084538] text-white text-sm font-bold px-6 py-3 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-2 active:scale-95"
             >
               <Phone className="w-4 h-4 text-[#C9A24D]" />
-              <span>Call +91 95663 69654</span>
+              <span className="tabular-nums">Call +91 95663 69654</span>
             </a>
 
             <a
@@ -84,12 +84,12 @@ export const ContactSection: React.FC = () => {
                 <div className="w-16 h-16 rounded-full bg-[#F5F3EE] text-[#0B5D4B] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10 text-[#0B5D4B]" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   JazakAllah Khair! Enquiry Received
                 </h3>
                 <p className="text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
                   Our senior pilgrimage counselor from the Trichy office will call you at{' '}
-                  <span className="font-bold text-[#202522]">{formData.mobile}</span> with detailed package itineraries and departures.
+                  <span className="font-bold text-[#202522] tabular-nums">{formData.mobile}</span> with detailed package itineraries and departures.
                 </p>
 
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -124,7 +124,7 @@ export const ContactSection: React.FC = () => {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1">
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#202522]">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-[#202522] tracking-tight">
                     Send Pilgrimage Enquiry
                   </h3>
                   <p className="text-xs text-[#555555]">
@@ -159,7 +159,7 @@ export const ContactSection: React.FC = () => {
                       value={formData.mobile}
                       onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                       placeholder="e.g. 98420 12345"
-                      className="w-full px-4 py-3 rounded-xl bg-[#F8F7F3] border border-[#E5E5E0] focus:border-[#0B5D4B] focus:ring-2 focus:ring-[#0B5D4B]/20 outline-none text-sm text-[#202522]"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F8F7F3] border border-[#E5E5E0] focus:border-[#0B5D4B] focus:ring-2 focus:ring-[#0B5D4B]/20 outline-none text-sm text-[#202522] tabular-nums"
                     />
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export const ContactSection: React.FC = () => {
                     <select
                       value={formData.travellersCount}
                       onChange={(e) => setFormData({ ...formData, travellersCount: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#F8F7F3] border border-[#E5E5E0] focus:border-[#0B5D4B] focus:ring-2 focus:ring-[#0B5D4B]/20 outline-none text-sm text-[#202522]"
+                      className="w-full px-4 py-3 rounded-xl bg-[#F8F7F3] border border-[#E5E5E0] focus:border-[#0B5D4B] focus:ring-2 focus:ring-[#0B5D4B]/20 outline-none text-sm text-[#202522] tabular-nums"
                     >
                       <option value="1">1 Pilgrim (Individual)</option>
                       <option value="2">2 Pilgrims (Couple / Pair)</option>
@@ -256,7 +256,7 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 border border-[#E5E5E0] shadow-sm space-y-6">
               <div>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   {BRAND_INFO.name}
                 </h3>
                 <p className="text-xs text-[#0B5D4B] font-semibold mt-0.5">
@@ -275,7 +275,7 @@ export const ContactSection: React.FC = () => {
                     <p className="text-[#555555] leading-snug mt-0.5">
                       {BRAND_INFO.addressLine1},<br />
                       {BRAND_INFO.addressLine2},<br />
-                      {BRAND_INFO.area}, {BRAND_INFO.city} – {BRAND_INFO.pincode},<br />
+                      {BRAND_INFO.area}, {BRAND_INFO.city} – <span className="tabular-nums">{BRAND_INFO.pincode}</span>,<br />
                       {BRAND_INFO.state}, {BRAND_INFO.country}
                     </p>
                   </div>
@@ -290,7 +290,7 @@ export const ContactSection: React.FC = () => {
                     <span className="font-bold block text-sm text-[#202522]">Direct Contact:</span>
                     <a
                       href={`tel:${BRAND_INFO.phoneTel}`}
-                      className="text-[#0B5D4B] font-bold text-base hover:underline block mt-0.5"
+                      className="text-[#0B5D4B] font-bold text-base hover:underline block mt-0.5 tabular-nums"
                     >
                       {BRAND_INFO.phoneFormatted}
                     </a>
@@ -304,7 +304,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <span className="font-bold block text-sm text-[#202522]">Consultation Hours:</span>
-                    <p className="text-[#555555] text-xs leading-relaxed mt-0.5">
+                    <p className="text-[#555555] text-xs leading-relaxed mt-0.5 tabular-nums">
                       {BRAND_INFO.workingHours}
                     </p>
                   </div>
@@ -325,7 +325,7 @@ export const ContactSection: React.FC = () => {
 
             {/* Cantonment Trichy Landmark Card */}
             <div className="bg-[#FFFFFF] rounded-2xl p-5 border border-[#E5E5E0] shadow-2xs">
-              <h4 className="font-serif text-base font-bold text-[#202522] mb-1">
+              <h4 className="text-base font-semibold text-[#202522] mb-1">
                 Landmark Guide:
               </h4>
               <p className="text-xs text-[#555555] leading-relaxed">

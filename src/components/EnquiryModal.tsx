@@ -45,12 +45,23 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
     }, 500);
   };
 
+  const packageLabels: Record<string, string> = {
+    'ramadan-first15': 'Ramadan Umrah (First 15 Days)',
+    'ramadan-last10': 'Ramadan Umrah (Last 10 Days & Laylat al-Qadr)',
+    'ramadan-fullmonth': 'Complete Full Month Ramadan Umrah (30 Days)',
+    'ziyarah-makkah': 'Sacred Makkah Al-Mukarramah Ziyarat Tour',
+    'ziyarah-madinah': 'Madinah Al-Munawwarah Prophetic Heritage Tour',
+    'ziyarah-badr': 'Battlefield of Badr Historic Expedition',
+    'ziyarah-taif': 'Taif Prophetic Haven & Rose Valley Tour',
+    'hajj': 'Hajj 2027 Pre-Registration',
+    'custom': 'Customized VIP Family Plan',
+  };
+
   const selectedPkg = UMRAH_PACKAGES.find((p) => p.id === formData.packagePreference);
+  const packageName = selectedPkg ? selectedPkg.name : (packageLabels[formData.packagePreference] || formData.packagePreference);
 
   const whatsappInquiryUrl = `https://wa.me/919566369654?text=${encodeURIComponent(
-    `Assalamu Alaikum As-Safar, My name is ${formData.fullName || 'Pilgrim'}. I would like to enquire about ${
-      selectedPkg ? selectedPkg.name : formData.packagePreference
-    } for ${formData.travellersCount} travellers in ${formData.preferredMonth}. ${formData.message}`
+    `Assalamu Alaikum As-Safar, My name is ${formData.fullName || 'Pilgrim'}. I would like to enquire about ${packageName} for ${formData.travellersCount} travellers in ${formData.preferredMonth}. ${formData.message}`
   )}`;
 
   return (
@@ -63,7 +74,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-[#E5E5E0] flex items-center justify-between shrink-0 bg-[#F5F3EE]">
           <div>
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#202522]">
+            <h3 className="text-xl sm:text-2xl font-semibold text-[#202522] tracking-tight">
               Umrah Pilgrimage Enquiry
             </h3>
             <p className="text-xs text-[#0B5D4B] font-semibold mt-0.5">
@@ -87,12 +98,12 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
               <div className="w-16 h-16 rounded-full bg-[#F5F3EE] text-[#0B5D4B] flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-10 h-10 text-[#0B5D4B]" />
               </div>
-              <h4 className="font-serif text-2xl font-bold text-[#202522]">
+              <h4 className="text-2xl font-semibold text-[#202522] tracking-tight">
                 Alhamdulillah! Enquiry Sent
               </h4>
               <p className="text-sm text-[#555555] leading-relaxed">
                 Thank you, <span className="font-bold text-[#202522]">{formData.fullName}</span>. Our pilgrimage coordinator will call you at{' '}
-                <span className="font-bold text-[#202522]">{formData.mobile}</span> shortly with complete dates, flight slots, and hotel confirmations.
+                <span className="font-bold text-[#202522] tabular-nums">{formData.mobile}</span> shortly with complete dates, flight slots, and hotel confirmations.
               </p>
 
               <div className="pt-2 space-y-2">
@@ -123,10 +134,10 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#0B5D4B] block">
                       Selected Package:
                     </span>
-                    <span className="font-serif text-base font-bold text-[#202522] block">
+                    <span className="text-base font-semibold text-[#202522] block">
                       {selectedPkg.name}
                     </span>
-                    <span className="text-xs text-[#555555] block">
+                    <span className="text-xs text-[#555555] block tabular-nums">
                       {selectedPkg.duration} · {selectedPkg.startingPrice}
                     </span>
                   </div>
@@ -209,12 +220,28 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                   onChange={(e) => setFormData({ ...formData, packagePreference: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-[#E5E5E0] text-sm text-[#202522] focus:border-[#0B5D4B] focus:ring-2 focus:ring-[#0B5D4B]/20 outline-none bg-[#F8F7F3]"
                 >
-                  {UMRAH_PACKAGES.map((pkg) => (
-                    <option key={pkg.id} value={pkg.id}>
-                      {pkg.name} — {pkg.duration} ({pkg.startingPrice})
-                    </option>
-                  ))}
-                  <option value="custom">Customized VIP Family Plan</option>
+                  <optgroup label="Monthly Umrah Packages">
+                    {UMRAH_PACKAGES.map((pkg) => (
+                      <option key={pkg.id} value={pkg.id}>
+                        {pkg.name} — {pkg.duration} ({pkg.startingPrice})
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Ramadan Umrah Packages">
+                    <option value="ramadan-first15">Ramadan Early Season (First 15 Days)</option>
+                    <option value="ramadan-last10">Ramadan Last 10 Days & Laylat al-Qadr</option>
+                    <option value="ramadan-fullmonth">Complete Full Month Ramadan (30 Days)</option>
+                  </optgroup>
+                  <optgroup label="Ziyarah Tours">
+                    <option value="ziyarah-makkah">Sacred Makkah Al-Mukarramah Ziyarat</option>
+                    <option value="ziyarah-madinah">Madinah Prophetic Heritage Tour</option>
+                    <option value="ziyarah-badr">Battlefield of Badr Expedition</option>
+                    <option value="ziyarah-taif">Taif Prophetic Haven & Rose Valley Tour</option>
+                  </optgroup>
+                  <optgroup label="Other Pilgrimages">
+                    <option value="hajj">Hajj 2027 Pre-Registration</option>
+                    <option value="custom">Customized VIP Family Plan</option>
+                  </optgroup>
                 </select>
               </div>
 

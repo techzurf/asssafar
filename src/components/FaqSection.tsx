@@ -17,7 +17,7 @@ export const FaqSection: React.FC = () => {
             <HelpCircle className="w-3.5 h-3.5 text-[#C9A24D]" />
             <span>Clear & Honest Guidance</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -40,7 +40,7 @@ export const FaqSection: React.FC = () => {
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-serif text-base sm:text-lg font-bold text-[#202522] leading-snug">
+                  <span className="text-base sm:text-lg font-semibold text-[#202522] leading-snug">
                     {faq.question}
                   </span>
                   <div
@@ -70,7 +70,7 @@ export const FaqSection: React.FC = () => {
             Have a question not listed here? Call our Cantonment Trichy team directly at{' '}
             <a
               href="tel:+919566369654"
-              className="font-bold text-[#0B5D4B] underline decoration-[#C9A24D]"
+              className="font-bold text-[#0B5D4B] underline decoration-[#C9A24D] tabular-nums"
             >
               +91 95663 69654
             </a>{' '}

@@ -21,7 +21,7 @@ export const WhyAsSafar: React.FC = () => {
             <span className="w-2 h-2 rounded-full bg-[#C9A24D]" />
             <span>Integrity · Reliability · Sunnah</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Why Choose As-Safar?
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -44,7 +44,7 @@ export const WhyAsSafar: React.FC = () => {
                     </div>
                   </div>
 
-                  <h3 className="font-serif text-xl font-bold text-[#202522]">
+                  <h3 className="text-xl font-semibold text-[#202522] tracking-tight">
                     {item.title}
                   </h3>
 
@@ -53,7 +53,7 @@ export const WhyAsSafar: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-[#E5E5E0] flex items-center justify-between text-xs text-[#555555] font-semibold">
+                <div className="pt-4 mt-4 border-t border-[#E5E5E0] flex items-center justify-between text-xs text-[#555555] font-semibold tabular-nums">
                   <span>Trichy Pilgrim Commitment</span>
                   <span className="text-[#C9A24D]">0{index + 1}</span>
                 </div>
@@ -65,7 +65,7 @@ export const WhyAsSafar: React.FC = () => {
         {/* Adjacency Trust Numbers Banner (Light corporate surface) */}
         <div className="mt-12 bg-[#F8F7F3] text-[#202522] rounded-2xl p-6 sm:p-8 border border-[#E5E5E0] grid grid-cols-2 lg:grid-cols-4 gap-6 text-center shadow-xs">
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums">
+            <div className="text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums tracking-tight">
               {BRAND_INFO.yearsExperience}
             </div>
             <div className="text-xs sm:text-sm text-[#555555] mt-1 font-medium">
@@ -73,7 +73,7 @@ export const WhyAsSafar: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums">
+            <div className="text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums tracking-tight">
               {BRAND_INFO.pilgrimsServed}
             </div>
             <div className="text-xs sm:text-sm text-[#555555] mt-1 font-medium">
@@ -81,7 +81,7 @@ export const WhyAsSafar: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums">
+            <div className="text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums tracking-tight">
               {BRAND_INFO.satisfactionRate}
             </div>
             <div className="text-xs sm:text-sm text-[#555555] mt-1 font-medium">
@@ -89,7 +89,7 @@ export const WhyAsSafar: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="font-serif text-2xl sm:text-3xl font-bold text-[#0B5D4B]">
+            <div className="text-2xl sm:text-3xl font-bold text-[#0B5D4B] tracking-tight">
               Trichy
             </div>
             <div className="text-xs sm:text-sm text-[#555555] mt-1 font-medium">

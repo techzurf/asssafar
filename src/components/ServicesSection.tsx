@@ -91,7 +91,7 @@ export const ServicesSection: React.FC = () => {
             <span className="w-2 h-2 rounded-full bg-[#C9A24D]" />
             <span>Comprehensive Pilgrimage Solutions</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Our Umrah Services
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -118,7 +118,7 @@ export const ServicesSection: React.FC = () => {
                     {iconLookup[srv.iconName]}
                   </div>
 
-                  <h3 className="font-serif text-lg font-bold text-[#202522] leading-snug">
+                  <h3 className="text-lg font-semibold text-[#202522] leading-snug">
                     {srv.title}
                   </h3>
 

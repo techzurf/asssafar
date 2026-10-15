@@ -8,15 +8,18 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { MakkahLiveDrawer } from './components/MakkahLiveDrawer';
 import { EnquiryModal } from './components/EnquiryModal';
 import { HajjModal } from './components/HajjModal';
+import { AirplaneCursor } from './components/AirplaneCursor';
 import { PackageItem } from './types';
 import { PageRoute, normalizePathname, updatePageMetadata } from './routes';
 import { LanguageProvider } from './context/LanguageContext';
 
-// Page components
 import { HomePage } from './pages/HomePage';
 import { UmrahPackagesPage } from './pages/UmrahPackagesPage';
+import { RamadanUmrahPage } from './pages/RamadanUmrahPage';
+import { ZiyarahPage } from './pages/ZiyarahPage';
 import { HajjPage } from './pages/HajjPage';
 import { AboutUsPage } from './pages/AboutUsPage';
 import { FaqPage } from './pages/FaqPage';
@@ -91,9 +94,23 @@ export default function App() {
             />
           )}
 
-          {currentPage === '/umrah-packages' && (
+          {(currentPage === '/monthly-umrah' || currentPage === '/umrah-packages') && (
             <UmrahPackagesPage
               onSelectPackage={handleSelectPackage}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentPage === '/ramadan-umrah' && (
+            <RamadanUmrahPage
+              onOpenEnquiry={handleOpenEnquiry}
+              onNavigate={navigateTo}
+            />
+          )}
+
+          {currentPage === '/ziyarah' && (
+            <ZiyarahPage
+              onOpenEnquiry={handleOpenEnquiry}
               onNavigate={navigateTo}
             />
           )}
@@ -131,11 +148,17 @@ export default function App() {
         {/* Floating WhatsApp Action Button */}
         <FloatingWhatsApp />
 
+        {/* Floating Makkah Live Video Button & Slide-in Drawer */}
+        <MakkahLiveDrawer onOpenPackages={() => navigateTo('/monthly-umrah')} />
+
         {/* Mobile-Only Bottom Navigation Bar */}
         <MobileBottomNav
           currentPage={currentPage}
           onNavigate={navigateTo}
         />
+
+        {/* Interactive Airplane Cursor (Desktop / Fine-Pointer Only) */}
+        <AirplaneCursor />
 
         {/* Central Interactive Enquiry Modal */}
         <EnquiryModal

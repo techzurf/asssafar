@@ -5,7 +5,10 @@
 
 export type PageRoute = 
   | '/'
+  | '/monthly-umrah'
   | '/umrah-packages'
+  | '/ramadan-umrah'
+  | '/ziyarah'
   | '/hajj-2027'
   | '/about-us'
   | '/faq'
@@ -25,11 +28,29 @@ export const ROUTES: Record<string, RouteInfo> = {
     title: 'As-Safar | Premium Umrah & Hajj Travel Agency Trichy',
     metaDescription: 'Experience a comfortable, guided, and spiritually enriching Umrah and Hajj journey with As-Safar. Located in Cantonment, Trichy, Tamil Nadu. Call +91 95663 69654.',
   },
+  monthlyUmrah: {
+    path: '/monthly-umrah',
+    label: 'Monthly Umrah',
+    title: 'Monthly Umrah Packages 2026/2027 | Economy, Standard & Premium | As-Safar Trichy',
+    metaDescription: 'Explore authentic monthly Umrah packages with verified hotel proximity, Tamil scholars, South Indian dining, and seamless Makkah & Madinah travel from Trichy & Chennai.',
+  },
   packages: {
     path: '/umrah-packages',
-    label: 'Umrah Packages',
-    title: 'Umrah Packages 2026/2027 | Economy, Standard & Premium | As-Safar Trichy',
-    metaDescription: 'Explore authentic Umrah packages with verified hotel proximity, Tamil scholars, South Indian dining, and seamless Makkah & Madinah travel from Trichy & Chennai.',
+    label: 'Monthly Umrah',
+    title: 'Monthly Umrah Packages 2026/2027 | Economy, Standard & Premium | As-Safar Trichy',
+    metaDescription: 'Explore authentic monthly Umrah packages with verified hotel proximity, Tamil scholars, South Indian dining, and seamless Makkah & Madinah travel from Trichy & Chennai.',
+  },
+  ramadanUmrah: {
+    path: '/ramadan-umrah',
+    label: 'Ramadan Umrah',
+    title: 'Ramadan Umrah Packages 2026 | Sacred Season in Makkah & Madinah | As-Safar Trichy',
+    metaDescription: 'Experience the blessed month of Ramadan in Makkah and Madinah with As-Safar. Taraweeh, Suhoor, Iftar, verified hotels, and dedicated scholar guidance from Trichy.',
+  },
+  ziyarah: {
+    path: '/ziyarah',
+    label: 'Ziyarah Tours',
+    title: 'Ziyarah Tours | Guided Islamic Historical Visits in Makkah & Madinah | As-Safar',
+    metaDescription: 'Guided visits to sacred Islamic historical sites in Makkah, Madinah, Badr, and Taif with knowledgeable Tamil-speaking scholars. Comfortable AC coach travel.',
   },
   hajj: {
     path: '/hajj-2027',
@@ -64,8 +85,14 @@ export function normalizePathname(pathname: string): PageRoute {
   // Strip trailing slashes except for root
   const cleaned = pathname.replace(/\/+$/, '') || '/';
   
-  if (cleaned === '/umrah-packages' || cleaned === '/packages') {
-    return '/umrah-packages';
+  if (cleaned === '/monthly-umrah' || cleaned === '/umrah-packages' || cleaned === '/packages' || cleaned === '/monthly') {
+    return '/monthly-umrah';
+  }
+  if (cleaned === '/ramadan-umrah' || cleaned === '/ramadan' || cleaned === '/ramzan') {
+    return '/ramadan-umrah';
+  }
+  if (cleaned === '/ziyarah' || cleaned === '/ziyarat' || cleaned === '/ziyara') {
+    return '/ziyarah';
   }
   if (cleaned === '/hajj-2027' || cleaned === '/hajj') {
     return '/hajj-2027';

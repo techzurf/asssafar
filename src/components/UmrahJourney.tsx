@@ -6,8 +6,20 @@ export const UmrahJourney: React.FC = () => {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
 
   return (
-    <section id="umrah" className="py-14 sm:py-20 bg-[#FFFFFF]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section 
+      id="umrah" 
+      className="py-14 sm:py-20 relative overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url('https://res.cloudinary.com/ddeivqykl/image/upload/v1791961421/Gemini_Generated_Image_immrh3immrh3immr_mrhvc2.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Subtle translucent white overlay to maintain readability while keeping background visible */}
+      <div className="absolute inset-0 bg-white/85 pointer-events-none" aria-hidden="true" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#E5E5E0] text-[#0B5D4B] text-xs font-semibold">
@@ -15,7 +27,7 @@ export const UmrahJourney: React.FC = () => {
             <span>Step-by-Step Spiritual Roadmap</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             The Umrah Journey with As-Safar
           </h2>
 
@@ -40,7 +52,7 @@ export const UmrahJourney: React.FC = () => {
                   }`}
                 >
                   <span
-                    className={`text-xs font-mono font-bold block ${
+                    className={`text-xs font-bold block tabular-nums ${
                       isSelected ? 'text-[#C9A24D]' : 'text-[#0B5D4B]'
                     }`}
                   >
@@ -58,11 +70,11 @@ export const UmrahJourney: React.FC = () => {
           <div className="mt-6 bg-[#FFFFFF] rounded-2xl p-8 border border-[#E5E5E0] shadow-sm transition-all">
             <div className="max-w-3xl space-y-3">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-2xl font-bold text-[#C9A24D]">
+                <span className="text-2xl font-bold text-[#C9A24D] tabular-nums">
                   Step {JOURNEY_STEPS[activeStepIndex].step}
                 </span>
                 <span className="h-4 w-[1px] bg-[#E5E5E0]" />
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   {JOURNEY_STEPS[activeStepIndex].title} — {JOURNEY_STEPS[activeStepIndex].subtitle}
                 </h3>
               </div>
@@ -102,7 +114,7 @@ export const UmrahJourney: React.FC = () => {
                 <div className="flex items-start gap-4">
                   {/* Step Number Circle */}
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono font-bold text-sm shrink-0 shadow-xs ${
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold tabular-nums text-sm shrink-0 shadow-xs ${
                       isCurrent
                         ? 'bg-[#0B5D4B] text-[#C9A24D]'
                         : 'bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0]'
@@ -113,7 +125,7 @@ export const UmrahJourney: React.FC = () => {
 
                   <div className="flex-1 space-y-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-serif text-lg font-bold text-[#202522]">
+                      <h3 className="text-lg font-semibold text-[#202522]">
                         {item.title}
                       </h3>
                       <ChevronRight

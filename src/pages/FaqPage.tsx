@@ -203,7 +203,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
               <span>Clear Guidance • Transparent Information</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               Frequently Asked <span className="text-[#FFCE1B]">Questions</span>
             </h1>
 
@@ -276,7 +276,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
           {filteredCategories.length === 0 ? (
             <div className="text-center py-16 space-y-3 bg-[#F8F7F3] rounded-3xl p-8 border border-[#E5E5E0]">
               <HelpCircle className="w-12 h-12 text-[#C9A24D] mx-auto" />
-              <h3 className="font-serif text-xl font-bold text-[#202522]">
+              <h3 className="text-xl font-semibold text-[#202522]">
                 No matching questions found
               </h3>
               <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto">
@@ -285,7 +285,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
               <div className="pt-2">
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="bg-[#0B5D4B] text-white font-bold text-xs px-4 py-2.5 rounded-xl"
+                  className="bg-[#0B5D4B] text-white font-bold text-xs px-4 py-2.5 rounded-xl cursor-pointer"
                 >
                   Clear Search Filter
                 </button>
@@ -300,10 +300,10 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
                     <div className="w-8 h-8 rounded-lg bg-[#F5F3EE] text-[#0B5D4B] flex items-center justify-center">
                       <Icon className="w-4 h-4 text-[#0B5D4B]" />
                     </div>
-                    <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#202522]">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#202522]">
                       {cat.name}
                     </h2>
-                    <span className="text-xs text-[#777777] ml-auto">
+                    <span className="text-xs text-[#777777] ml-auto tabular-nums">
                       {cat.questions.length} questions
                     </span>
                   </div>
@@ -320,7 +320,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
                         >
                           <button
                             onClick={() => toggleItem(itemKey)}
-                            className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-serif font-bold text-base text-[#202522] cursor-pointer"
+                            className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-base text-[#202522] cursor-pointer"
                             aria-expanded={isOpen}
                           >
                             <span className="leading-snug">{faq.q}</span>
@@ -355,7 +355,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onNavigate, onOpenEnquiry }) =
           <div className="w-12 h-12 rounded-full bg-[#EAF3EF] text-[#0B5D4B] flex items-center justify-center mx-auto">
             <HelpCircle className="w-6 h-6 text-[#0B5D4B]" />
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202522]">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#202522]">
             Have a Question Not Listed Here?
           </h2>
           <p className="text-xs sm:text-sm text-[#555555] max-w-xl mx-auto">

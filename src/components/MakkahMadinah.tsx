@@ -11,7 +11,7 @@ export const MakkahMadinah: React.FC = () => {
             <Sparkles className="w-3.5 h-3.5 text-[#C9A24D]" />
             <span>The Two Holy Sanctuaries</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Makkah Al-Mukarramah & Madinah Al-Munawwarah
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -40,7 +40,7 @@ export const MakkahMadinah: React.FC = () => {
               </div>
 
               <div className="absolute bottom-4 left-4 right-4 text-white">
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold">
+                <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight">
                   Experience the spiritual heart of Islam.
                 </h3>
               </div>
@@ -85,7 +85,7 @@ export const MakkahMadinah: React.FC = () => {
               </div>
 
               <div className="absolute bottom-4 left-4 right-4 text-white">
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold">
+                <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight">
                   Visit the beloved city of Prophet Muhammad ﷺ.
                 </h3>
               </div>

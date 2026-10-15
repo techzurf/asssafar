@@ -110,7 +110,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
               <span>Advance Registration Open • Trichy & Tamil Nadu</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               Prepare for <span className="text-[#FFCE1B]">Hajj 2027</span> with As-Safar
             </h1>
 
@@ -131,7 +131,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
                 className="bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3.5 rounded-xl border border-white/20 transition-all flex items-center gap-2"
               >
                 <Phone className="w-4 h-4 text-[#C9A24D]" />
-                <span>Call +91 95663 69654</span>
+                <span className="tabular-nums">Call +91 95663 69654</span>
               </a>
             </div>
           </div>
@@ -157,7 +157,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
             <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
               Step-by-Step Roadmap
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#202522]">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#202522]">
               How As-Safar Prepares You for Hajj 2027
             </h2>
             <p className="text-sm sm:text-base text-[#555555]">
@@ -189,10 +189,10 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
               },
             ].map((st, i) => (
               <div key={i} className="bg-[#F8F7F3] rounded-2xl p-6 border border-[#E5E5E0] space-y-3 relative overflow-hidden">
-                <span className="font-serif text-3xl font-extrabold text-[#C9A24D]/30 block">
+                <span className="text-3xl font-bold text-[#C9A24D]/30 block tabular-nums">
                   {st.step}
                 </span>
-                <h3 className="font-serif font-bold text-lg text-[#202522]">{st.title}</h3>
+                <h3 className="font-semibold text-lg text-[#202522]">{st.title}</h3>
                 <p className="text-xs text-[#555555] leading-relaxed">{st.desc}</p>
               </div>
             ))}
@@ -211,7 +211,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
                   <Users className="w-4 h-4 text-[#C9A24D]" />
                   <span>Conducted in Trichy</span>
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   Pre-Hajj Intensive Seminars & Workshops
                 </h3>
                 <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
@@ -247,7 +247,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
                   <ShieldCheck className="w-4 h-4 text-[#C9A24D]" />
                   <span>The Sacred Days of Tashreeq</span>
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   Mina & Arafat Dedicated Ground Support
                 </h3>
                 <p className="text-xs sm:text-sm text-[#555555] leading-relaxed">
@@ -287,7 +287,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
               <span className="text-xs font-bold uppercase tracking-wider text-[#C9A24D]">
                 Priority Registration
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#202522]">
+              <h2 className="text-3xl font-bold text-[#202522]">
                 Hajj 2027 Advance Registration Enquiry
               </h2>
               <p className="text-xs sm:text-sm text-[#555555]">
@@ -300,7 +300,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
                 <div className="w-16 h-16 rounded-full bg-[#EAF3EF] text-[#0B5D4B] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10 text-[#0B5D4B]" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   Enquiry Successfully Recorded
                 </h3>
                 <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
@@ -448,7 +448,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
       <section className="py-14 sm:py-20 bg-[#F8F7F3]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202522]">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#202522]">
               Hajj 2027 Frequently Asked Questions
             </h2>
             <p className="text-sm text-[#555555]">
@@ -463,7 +463,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
                 <div key={i} className="border border-[#E5E5E0] rounded-2xl overflow-hidden bg-white">
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? null : i)}
-                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-serif font-bold text-base text-[#202522] cursor-pointer"
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-base text-[#202522] cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown className={`w-4 h-4 text-[#0B5D4B] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -483,7 +483,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
       {/* 6. Contact and WhatsApp Enquiry CTA */}
       <section className="py-12 bg-[#07382E] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white">
             Speak Directly with our Trichy Hajj Counselors
           </h2>
           <p className="text-sm sm:text-base text-[#EAF3EF]/90 max-w-2xl mx-auto">
@@ -495,7 +495,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({ onNavigate }) => {
               className="bg-[#C9A24D] hover:bg-[#B38D3B] text-[#07382E] font-bold text-sm px-6 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2"
             >
               <Phone className="w-4 h-4 fill-[#07382E]" />
-              <span>Call +91 95663 69654</span>
+              <span className="tabular-nums">Call +91 95663 69654</span>
             </a>
 
             <a

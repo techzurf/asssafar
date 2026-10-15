@@ -37,6 +37,63 @@ const GoogleLogo = () => (
   </svg>
 );
 
+// Theme styles for the four individual Google review cards
+interface ReviewCardStyle {
+  bg: string;
+  border: string;
+  hoverBorder: string;
+  shadow: string;
+  hoverShadow: string;
+  topAccent: string;
+  buttonBorder: string;
+}
+
+const REVIEW_CARD_STYLES: Record<string, ReviewCardStyle> = {
+  'review-jazzar-sharif': {
+    bg: 'bg-[#EFF6FF]',
+    border: 'border-[#BFDBFE]',
+    hoverBorder: 'hover:border-[#93C5FD]',
+    shadow: 'shadow-[0_4px_16px_rgba(59,130,246,0.08)]',
+    hoverShadow: 'hover:shadow-[0_8px_24px_rgba(59,130,246,0.18)]',
+    topAccent: 'from-[#3B82F6] via-[#60A5FA] to-[#2563EB]',
+    buttonBorder: 'border-[#BFDBFE]',
+  },
+  'review-mubeena-nasrin-salim': {
+    bg: 'bg-[#F5F3FF]',
+    border: 'border-[#DDD6FE]',
+    hoverBorder: 'hover:border-[#C4B5FD]',
+    shadow: 'shadow-[0_4px_16px_rgba(139,92,246,0.08)]',
+    hoverShadow: 'hover:shadow-[0_8px_24px_rgba(139,92,246,0.18)]',
+    topAccent: 'from-[#8B5CF6] via-[#A78BFA] to-[#7C3AED]',
+    buttonBorder: 'border-[#DDD6FE]',
+  },
+  'review-sabah-farheen': {
+    bg: 'bg-[#FFF7ED]',
+    border: 'border-[#FED7AA]',
+    hoverBorder: 'hover:border-[#FDBA74]',
+    shadow: 'shadow-[0_4px_16px_rgba(249,115,22,0.08)]',
+    hoverShadow: 'hover:shadow-[0_8px_24px_rgba(249,115,22,0.18)]',
+    topAccent: 'from-[#F97316] via-[#FB923C] to-[#EA580C]',
+    buttonBorder: 'border-[#FED7AA]',
+  },
+  'review-abdur-rahman': {
+    bg: 'bg-[#ECFDF5]',
+    border: 'border-[#A7F3D0]',
+    hoverBorder: 'hover:border-[#6EE7B7]',
+    shadow: 'shadow-[0_4px_16px_rgba(16,185,129,0.08)]',
+    hoverShadow: 'hover:shadow-[0_8px_24px_rgba(16,185,129,0.18)]',
+    topAccent: 'from-[#10B981] via-[#34D399] to-[#059669]',
+    buttonBorder: 'border-[#A7F3D0]',
+  },
+};
+
+const ORDERED_STYLES: ReviewCardStyle[] = [
+  REVIEW_CARD_STYLES['review-jazzar-sharif'],
+  REVIEW_CARD_STYLES['review-mubeena-nasrin-salim'],
+  REVIEW_CARD_STYLES['review-sabah-farheen'],
+  REVIEW_CARD_STYLES['review-abdur-rahman'],
+];
+
 export const GoogleReviewsSection: React.FC = () => {
   const { t } = useLanguage();
 
@@ -44,14 +101,8 @@ export const GoogleReviewsSection: React.FC = () => {
     <section 
       id="reviews"
       aria-label="Google Reviews"
-      className="py-16 sm:py-24 relative overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: 'url(https://res.cloudinary.com/ddeivqykl/image/upload/v1791978374/PR_Consultancy_Website_Website_in_Blue_Purple_White_Professional_Gradients_Style_bgnc6l.png)'
-      }}
+      className="py-16 sm:py-24 relative overflow-hidden bg-[#FFFFFF]"
     >
-      {/* Subtle translucent white overlay for optimal readability */}
-      <div className="absolute inset-0 bg-white/88 pointer-events-none" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -61,7 +112,7 @@ export const GoogleReviewsSection: React.FC = () => {
             <span>{t('reviews.badge')}</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#0F2942] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0F2942] tracking-tight">
             {t('reviews.heading')}
           </h2>
 
@@ -115,88 +166,92 @@ export const GoogleReviewsSection: React.FC = () => {
                   <strong className="text-[#0F2942]">{GOOGLE_RATING_SUMMARY.totalReviews}</strong> Google Reviews
                 </p>
               </div>
-              <span className="font-serif text-3xl sm:text-4xl font-bold text-[#0F2942] tracking-tight bg-white px-3 py-1.5 rounded-xl border border-[#E5E5E0]">
+              <span className="text-3xl sm:text-4xl font-bold text-[#0F2942] tracking-tight tabular-nums bg-white px-3 py-1.5 rounded-xl border border-[#E5E5E0]">
                 {GOOGLE_RATING_SUMMARY.rating.toFixed(1)}
               </span>
             </div>
           </a>
         </div>
 
-        {/* Four Genuine Google Review Cards — Responsive 4-Column Grid */}
+        {/* Four Genuine Google Review Cards — Responsive 4-Column Grid with 4 Distinct Soft Colors */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {OFFICIAL_GOOGLE_REVIEW_CARDS.map((review) => (
-            <div
-              key={review.id}
-              className="group flex flex-col justify-between bg-white rounded-2xl border border-[#E5E5E0] hover:border-[#0B5D4B]/40 hover:shadow-lg transition-all duration-300 p-6 relative overflow-hidden text-left"
-            >
-              {/* Subtle top accent bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#0B5D4B] via-[#C9A24D] to-[#0B5D4B] opacity-0 group-hover:opacity-100 transition-opacity" />
+          {OFFICIAL_GOOGLE_REVIEW_CARDS.map((review, index) => {
+            const style = REVIEW_CARD_STYLES[review.id] || ORDERED_STYLES[index % ORDERED_STYLES.length];
 
-              {/* Review Card Header & Body */}
-              <div className="space-y-4">
-                {/* Reviewer Header: Initials Avatar + Name + Date */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    {/* Neutral Initials Avatar with mini Google badge */}
-                    <div className="relative shrink-0">
-                      <div className="w-11 h-11 rounded-full bg-[#0F2942] text-[#F3F4F6] flex items-center justify-center font-bold text-xs tracking-wider border border-[#E5E5E0] shadow-2xs group-hover:bg-[#0B5D4B] transition-colors">
-                        {review.initials}
+            return (
+              <div
+                key={review.id}
+                className={`group flex flex-col justify-between ${style.bg} rounded-2xl border ${style.border} ${style.hoverBorder} ${style.shadow} ${style.hoverShadow} hover:-translate-y-[2.5px] transition-all duration-[250ms] ease-out p-6 relative overflow-hidden text-left`}
+              >
+                {/* Subtle top accent bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${style.topAccent} opacity-0 group-hover:opacity-100 transition-opacity`} />
+
+                {/* Review Card Header & Body */}
+                <div className="space-y-4">
+                  {/* Reviewer Header: Initials Avatar + Name + Date */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      {/* Neutral Initials Avatar with mini Google badge */}
+                      <div className="relative shrink-0">
+                        <div className="w-11 h-11 rounded-full bg-[#0F2942] text-[#F3F4F6] flex items-center justify-center font-bold text-xs tracking-wider border border-white/60 shadow-2xs group-hover:bg-[#0B5D4B] transition-colors">
+                          {review.initials}
+                        </div>
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full p-0.5 shadow-2xs border border-[#E5E5E0] flex items-center justify-center">
+                          <GoogleLogo />
+                        </div>
                       </div>
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full p-0.5 shadow-2xs border border-[#E5E5E0] flex items-center justify-center">
-                        <GoogleLogo />
+
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-sm sm:text-base text-[#0F2942] truncate leading-tight">
+                          {review.reviewerName}
+                        </h3>
+                        <p className="text-xs text-[#64748B] mt-0.5">
+                          {review.date}
+                        </p>
                       </div>
                     </div>
 
-                    <div className="min-w-0">
-                      <h3 className="font-semibold text-sm sm:text-base text-[#0F2942] truncate leading-tight">
-                        {review.reviewerName}
-                      </h3>
-                      <p className="text-xs text-[#718096] mt-0.5">
-                        {review.date}
-                      </p>
-                    </div>
+                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#0B5D4B] bg-white/90 border border-black/5 px-2 py-0.5 rounded-full shrink-0 shadow-2xs">
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Google</span>
+                    </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#0B5D4B] bg-[#EAF3EF] px-2 py-0.5 rounded-full shrink-0">
-                    <CheckCircle2 className="w-3 h-3" />
-                    <span>Google</span>
-                  </span>
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-1 text-[#FFCE1B]">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#FFCE1B] text-[#FFCE1B]" />
+                    ))}
+                    <span className="ml-1 text-xs font-bold text-[#0F2942]">5.0</span>
+                  </div>
+
+                  {/* Review Text Body */}
+                  <div className="relative pt-1">
+                    <Quote className="w-4 h-4 text-[#C9A24D]/40 mb-1" />
+                    <p className="text-xs sm:text-sm text-[#1F2937] leading-relaxed whitespace-pre-line font-normal">
+                      “{review.reviewText}”
+                    </p>
+                  </div>
                 </div>
 
-                {/* Star Rating */}
-                <div className="flex items-center gap-1 text-[#FFCE1B]">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#FFCE1B] text-[#FFCE1B]" />
-                  ))}
-                  <span className="ml-1 text-xs font-bold text-[#0F2942]">5.0</span>
-                </div>
-
-                {/* Review Text Body */}
-                <div className="relative pt-1">
-                  <Quote className="w-4 h-4 text-[#C9A24D]/40 mb-1" />
-                  <p className="text-xs sm:text-sm text-[#374151] leading-relaxed whitespace-pre-line font-normal">
-                    “{review.reviewText}”
-                  </p>
+                {/* Card Action Link: "Read Full Review on Google" */}
+                <div className="pt-4 mt-6 border-t border-black/5">
+                  <a
+                    href={review.googleReviewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl bg-white/90 hover:bg-white text-[#0F2942] border ${style.buttonBorder} hover:border-[#0F2942] text-xs font-semibold transition-all duration-[250ms] group/btn shadow-2xs`}
+                  >
+                    <span className="flex items-center gap-1.5 truncate">
+                      <span className="w-3.5 h-3.5 shrink-0"><GoogleLogo /></span>
+                      <span className="truncate">Read Full Review on Google</span>
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5 text-[#C9A24D] group-hover/btn:text-[#0B5D4B] shrink-0 ml-1.5 transition-colors" />
+                  </a>
                 </div>
               </div>
-
-              {/* Card Action Link: "Read Full Review on Google" */}
-              <div className="pt-4 mt-6 border-t border-[#F0F0EC]">
-                <a
-                  href={review.googleReviewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl bg-[#FAFAF8] hover:bg-[#0B5D4B] text-[#0F2942] hover:text-white border border-[#E5E5E0] hover:border-[#0B5D4B] text-xs font-semibold transition-all group/btn shadow-2xs"
-                >
-                  <span className="flex items-center gap-1.5 truncate">
-                    <span className="w-3.5 h-3.5 shrink-0"><GoogleLogo /></span>
-                    <span className="truncate">Read Full Review on Google</span>
-                  </span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#C9A24D] group-hover/btn:text-[#FFCE1B] shrink-0 ml-1.5 transition-colors" />
-                </a>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Action Buttons: “Read All Google Reviews” & “Write a Review” */}
@@ -226,7 +281,7 @@ export const GoogleReviewsSection: React.FC = () => {
         <div className="text-center mt-8 text-[11px] text-[#718096] max-w-xl mx-auto space-y-1">
           <div className="flex items-center justify-center gap-2 font-medium text-[#4A5568]">
             <ShieldCheck className="w-3.5 h-3.5 text-[#0B5D4B]" />
-            <span>Official Google Business Profile • 4.9 Star Rating (91 Reviews)</span>
+            <span>Official Google Business Profile • 4.9 Star Rating ({GOOGLE_RATING_SUMMARY.totalReviews} Reviews)</span>
           </div>
           <p>
             Google and the Google Maps logo are trademarks of Google LLC.

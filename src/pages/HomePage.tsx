@@ -28,14 +28,14 @@ export const HomePage: React.FC<HomePageProps> = ({
     <div>
       {/* Hero Section with 3 slides */}
       <Hero
-        onExplorePackages={() => onNavigate('/umrah-packages')}
+        onExplorePackages={() => onNavigate('/monthly-umrah')}
         onTalkToTeam={() => onNavigate('/contact')}
         onOpenHajj={() => onNavigate('/hajj-2027')}
       />
 
       {/* Quick Actions (Desktop 4-grid / Mobile cards) */}
       <QuickActions
-        onScrollToPackages={() => onNavigate('/umrah-packages')}
+        onScrollToPackages={() => onNavigate('/monthly-umrah')}
         onOpenHajj={() => onNavigate('/hajj-2027')}
       />
 

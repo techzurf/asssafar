@@ -25,7 +25,6 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onOpenHajj }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const { t } = useLanguage();
 
@@ -146,32 +145,32 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
     },
   ], [t, onExplorePackages, onTalkToTeam, onOpenHajj]);
 
-  // Automatic change every 5 seconds (resets timer when currentSlide changes or paused)
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused, currentSlide, slides.length]);
+  const totalSlides = slides.length;
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   };
 
+  // Automatically advance to the next hero slide every 5 seconds
+  // Resets timer on slide change (both automatic cycle and manual navigation)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [currentSlide, totalSlides]);
 
   // Touch swipe support on mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    setIsPaused(true);
     touchStartX.current = e.touches[0].clientX;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    setIsPaused(false);
     if (touchStartX.current !== null) {
       const diff = touchStartX.current - e.changedTouches[0].clientX;
       if (diff > 45) {
@@ -187,8 +186,6 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
     <section 
       id="home" 
       className="relative w-full overflow-hidden bg-[#0A0D0C] text-white min-h-[560px] sm:min-h-[600px] lg:h-[640px] flex items-center"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
@@ -250,7 +247,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
 
                 {/* Main Heading */}
                 <h1 
-                  className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15] text-balance drop-shadow-md"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15] text-balance drop-shadow-md"
                 >
                   {slide.headline}
                 </h1>

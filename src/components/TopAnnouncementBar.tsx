@@ -34,7 +34,7 @@ export const TopAnnouncementBar: React.FC = () => {
       {/* Departure Date */}
       <span className="inline-flex items-center gap-1">
         <span className="text-[#EAF3EF]/90 font-medium">Departure Date:</span>{' '}
-        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20">
+        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20 tabular-nums">
           {departureDate}
         </strong>
       </span>
@@ -47,7 +47,7 @@ export const TopAnnouncementBar: React.FC = () => {
       {/* Departure Time */}
       <span className="inline-flex items-center gap-1">
         <span className="text-[#EAF3EF]/90 font-medium">Departure Time:</span>{' '}
-        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20">
+        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20 tabular-nums">
           {departureTime}
         </strong>
       </span>
@@ -65,7 +65,7 @@ export const TopAnnouncementBar: React.FC = () => {
       >
         <Phone className="w-3 h-3 text-[#C9A24D]" />
         <span className="text-[#EAF3EF]/90 font-medium">Contact Us:</span>{' '}
-        <span className="font-bold text-[#FFCE1B] underline decoration-[#C9A24D]/60 decoration-1 underline-offset-2">
+        <span className="font-bold text-[#FFCE1B] underline decoration-[#C9A24D]/60 decoration-1 underline-offset-2 tabular-nums">
           {contactNumber}
         </span>
       </a>

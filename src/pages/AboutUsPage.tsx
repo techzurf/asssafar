@@ -43,7 +43,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
               <span>Rooted in Cantonment, Trichy • Dedicated to Pilgrims</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               About <span className="text-[#FFCE1B]">As-Safar</span>
             </h1>
 
@@ -79,7 +79,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
               <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
                 Our Philosophy & Calling
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#202522]">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#202522]">
                 Guiding the Guests of Ar-Rahman with Utmost Sincerity
               </h2>
               
@@ -137,7 +137,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
             <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
               What Defines Us
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#202522]">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#202522]">
               Our Guiding Principles & Values
             </h2>
             <p className="text-sm text-[#555555]">
@@ -174,7 +174,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
                   <div className="w-12 h-12 rounded-xl bg-[#F5F3EE] text-[#0B5D4B] flex items-center justify-center">
                     <Icon className="w-6 h-6 text-[#0B5D4B]" />
                   </div>
-                  <h3 className="font-serif font-bold text-lg text-[#202522]">{val.title}</h3>
+                  <h3 className="font-semibold text-lg text-[#202522]">{val.title}</h3>
                   <p className="text-xs text-[#555555] leading-relaxed">{val.desc}</p>
                 </div>
               );
@@ -190,7 +190,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
             <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
               Dedicated Pilgrim Support
             </span>
-            <h2 className="font-serif text-3xl font-bold text-[#202522]">
+            <h2 className="text-3xl font-bold text-[#202522]">
               Customer Service Across Every Phase
             </h2>
             <p className="text-sm text-[#555555]">
@@ -201,7 +201,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-[#F8F7F3] p-6 rounded-2xl border border-[#E5E5E0] space-y-3">
               <span className="text-xs font-bold text-[#C9A24D] uppercase">Phase 1</span>
-              <h3 className="font-serif font-bold text-lg text-[#202522]">Pre-Departure Preparation</h3>
+              <h3 className="font-semibold text-lg text-[#202522]">Pre-Departure Preparation</h3>
               <ul className="space-y-2 text-xs text-[#555555]">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-3.5 h-3.5 text-[#0B5D4B] shrink-0 mt-0.5" />
@@ -220,7 +220,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
 
             <div className="bg-[#F8F7F3] p-6 rounded-2xl border border-[#E5E5E0] space-y-3">
               <span className="text-xs font-bold text-[#C9A24D] uppercase">Phase 2</span>
-              <h3 className="font-serif font-bold text-lg text-[#202522]">During the Pilgrimage in KSA</h3>
+              <h3 className="font-semibold text-lg text-[#202522]">During the Pilgrimage in KSA</h3>
               <ul className="space-y-2 text-xs text-[#555555]">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-3.5 h-3.5 text-[#0B5D4B] shrink-0 mt-0.5" />
@@ -239,7 +239,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
 
             <div className="bg-[#F8F7F3] p-6 rounded-2xl border border-[#E5E5E0] space-y-3">
               <span className="text-xs font-bold text-[#C9A24D] uppercase">Phase 3</span>
-              <h3 className="font-serif font-bold text-lg text-[#202522]">Return & Post-Journey Care</h3>
+              <h3 className="font-semibold text-lg text-[#202522]">Return & Post-Journey Care</h3>
               <ul className="space-y-2 text-xs text-[#555555]">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-3.5 h-3.5 text-[#0B5D4B] shrink-0 mt-0.5" />
@@ -262,7 +262,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
       {/* 5. Prominent Contact / Enquiry Call to Action */}
       <section className="py-12 bg-[#07382E] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white">
             Have Questions About Planning with As-Safar?
           </h2>
           <p className="text-sm sm:text-base text-[#EAF3EF]/90 max-w-2xl mx-auto">

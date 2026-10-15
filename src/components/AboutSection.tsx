@@ -14,7 +14,7 @@ export const AboutSection: React.FC = () => {
                 <Sparkles className="w-3.5 h-3.5 text-[#C9A24D]" />
                 <span>Our Roots & Commitment</span>
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
                 About As-Safar
               </h2>
               <p className="text-[#0B5D4B] font-semibold text-base sm:text-lg">
@@ -59,7 +59,7 @@ export const AboutSection: React.FC = () => {
                 <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block">
                   Trichy Headquarters
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                   Tabs Complex, Cantonment
                 </h3>
                 <p className="text-xs text-[#555555]">

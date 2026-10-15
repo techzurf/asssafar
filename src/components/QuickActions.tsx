@@ -13,60 +13,83 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
 
   return (
     <section className="relative z-10 -mt-6 sm:-mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-[#FFFFFF] rounded-2xl shadow-sm border border-[#E5E5E0] p-3 sm:p-4">
+      <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E5E0] p-3 sm:p-4">
         {/* Mobile: 2x2 grid / Desktop: 4 equal cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
-          {/* Action 1: Umrah Packages */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          {/* Card 1 — Explore Umrah Packages: Royal blue gradient (#2563EB to #60A5FA) */}
           <button
             onClick={onScrollToPackages}
-            className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F3] hover:bg-[#F5F3EE] border border-[#E5E5E0] hover:border-[#0B5D4B]/30 transition-all text-left active:scale-[0.98] group cursor-pointer"
+            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] text-white shadow-md shadow-blue-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            aria-label="Explore Umrah Packages"
           >
-            <div className="w-10 h-10 rounded-lg bg-[#0B5D4B] text-[#C9A24D] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Compass className="w-5 h-5" />
+            {/* White compass/explore icon inside translucent light-blue container */}
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Compass className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
-            <div className="min-w-0">
-              <p className="text-xs text-[#555555] font-medium leading-none mb-1">{t('quick.explore')}</p>
-              <p className="text-sm font-bold text-[#202522] leading-tight truncate">{t('quick.umrah')}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+                {t('quick.explore') || 'Explore'}
+              </p>
+              <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
+                {t('quick.umrah') || 'Umrah Packages'}
+              </p>
             </div>
           </button>
 
-          {/* Action 2: Hajj 2027 */}
+          {/* Card 2 — Hajj 2027: Purple gradient (#7C3AED to #A78BFA) */}
           <button
             onClick={onOpenHajj}
-            className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F3] hover:bg-[#F5F3EE] border border-[#E5E5E0] hover:border-[#C9A24D]/50 transition-all text-left active:scale-[0.98] group cursor-pointer"
+            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] text-white shadow-md shadow-purple-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            aria-label="Pre-Register Hajj 2027"
           >
-            <div className="w-10 h-10 rounded-lg bg-[#C9A24D] text-[#073E32] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Moon className="w-5 h-5" />
+            {/* White crescent moon icon inside translucent lavender container */}
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Moon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
-            <div className="min-w-0">
-              <p className="text-xs text-[#555555] font-medium leading-none mb-1">{t('quick.preregi')}</p>
-              <p className="text-sm font-bold text-[#202522] leading-tight truncate">{t('quick.hajj2027')}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+                {t('quick.preregi') || 'Pre-Register'}
+              </p>
+              <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
+                {t('quick.hajj2027') || 'Hajj 2027'}
+              </p>
             </div>
           </button>
 
-          {/* Action 3: Call Us */}
+          {/* Card 3 — Call Us: Coral/orange gradient (#EA580C to #FB923C) */}
           <a
             href={`tel:${BRAND_INFO.phoneTel}`}
-            className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F3] hover:bg-[#F5F3EE] border border-[#E5E5E0] hover:border-[#0B5D4B]/30 transition-all text-left active:scale-[0.98] group"
+            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#EA580C] to-[#FB923C] text-white shadow-md shadow-orange-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            aria-label="Direct Dial Call Us"
           >
-            <div className="w-10 h-10 rounded-lg bg-[#202522] text-[#C9A24D] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-              <Phone className="w-5 h-5" />
+            {/* White telephone icon inside translucent peach container */}
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Phone className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
-            <div className="min-w-0">
-              <p className="text-xs text-[#555555] font-medium leading-none mb-1">{t('quick.direct')}</p>
-              <p className="text-sm font-bold text-[#202522] leading-tight truncate">{t('quick.callus')}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+                {t('quick.direct') || 'Direct Dial'}
+              </p>
+              <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
+                {t('quick.callus') || 'Call Us'}
+              </p>
             </div>
           </a>
 
-          {/* Action 4: Google Reviews */}
+          {/* Card 4 — Google Reviews: Teal-blue gradient (#0F766E to #2DD4BF) */}
           <a
             href="https://www.google.com/maps/place/AS+SAFAR+HAJJ+%26+UMRAH+SERVICE+(TOURS+%26+TRAVELS)/@10.8044885,78.686336,17z/data=!3m1!5s0x3baaf511e627e161:0x90fc153495ecdc68!4m8!3m7!1s0x3baaf5b2b88c0751:0xbec94c48e0fc0622!8m2!3d10.8044885!4d78.686336!9m1!1b1!16s%2Fg%2F11sv_3mvzt?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
             rel="noopener noreferrer"
             title="Read 92 Google Reviews for As-Safar Hajj & Umrah Service"
-            className="flex items-center gap-3 p-3 rounded-xl bg-[#F8F7F3] hover:bg-[#F5F3EE] border border-[#E5E5E0] hover:border-[#0B5D4B]/30 transition-all text-left active:scale-[0.98] group cursor-pointer"
+            className="google-reviews-card flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#0F766E] to-[#2DD4BF] text-white shadow-md shadow-teal-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            aria-label="Google Reviews 4.9 rating 92 reviews"
           >
-            <div className="w-10 h-10 rounded-lg bg-white border border-[#E5E5E0] p-2 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+            {/* Subtle soft white ripple effect */}
+            <span className="google-reviews-ripple" aria-hidden="true" />
+
+            {/* Google logo inside white rounded container */}
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shrink-0 shadow-xs border border-white/30 group-hover:scale-105 transition-all duration-300">
               <svg className="w-full h-full" viewBox="0 0 24 24" aria-label="Google logo">
                 <path
                   fill="#4285F4"
@@ -86,17 +109,22 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
                 />
               </svg>
             </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 mb-1">
-                <p className="text-xs text-[#555555] font-medium leading-none truncate">{t('quick.reviews')}</p>
-                <div className="flex items-center text-[#FFCE1B] shrink-0" aria-label="5 stars">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 mb-1 min-w-0">
+                <p className="text-[11px] sm:text-xs text-white/90 font-medium leading-none truncate">
+                  {t('quick.reviews') || 'Google Reviews'}
+                </p>
+                <div className="flex items-center shrink-0" aria-label="5 stars">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-2.5 h-2.5 fill-[#FFCE1B] text-[#FFCE1B]" />
+                    <Star
+                      key={i}
+                      className="w-2.5 h-2.5 fill-[#FFD700] text-[#FFD700] drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"
+                    />
                   ))}
                 </div>
               </div>
-              <p className="text-sm font-bold text-[#0B5D4B] leading-tight truncate">
-                4.9 Rating <span className="text-xs font-normal text-[#555555]">· 92 {t('quick.reviews')}</span>
+              <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
+                4.9 Rating <span className="text-[11px] sm:text-xs font-normal text-white/90">· 92 Google Reviews</span>
               </p>
             </div>
           </a>

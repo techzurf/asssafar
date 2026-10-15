@@ -87,7 +87,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <span>Cantonment, Tiruchirappalli • Tamil Nadu, India</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               Contact <span className="text-[#FFCE1B]">As-Safar</span>
             </h1>
 
@@ -112,7 +112,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               </div>
               <div className="min-w-0">
                 <p className="text-xs text-[#777777] font-semibold">Direct Call (Trichy)</p>
-                <p className="font-bold text-sm sm:text-base text-[#202522] truncate">{BRAND_INFO.phoneFormatted}</p>
+                <p className="font-bold text-sm sm:text-base text-[#202522] truncate tabular-nums">{BRAND_INFO.phoneFormatted}</p>
               </div>
             </a>
 
@@ -128,7 +128,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               </div>
               <div className="min-w-0">
                 <p className="text-xs text-[#777777] font-semibold">Instant WhatsApp</p>
-                <p className="font-bold text-sm sm:text-base text-[#202522] truncate">+91 95663 69654</p>
+                <p className="font-bold text-sm sm:text-base text-[#202522] truncate tabular-nums">+91 95663 69654</p>
               </div>
             </a>
 
@@ -139,7 +139,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               </div>
               <div className="min-w-0">
                 <p className="text-xs text-[#777777] font-semibold">Consultation Hours</p>
-                <p className="font-bold text-xs sm:text-sm text-[#202522]">Mon – Sat: 9:30 AM – 8:30 PM</p>
+                <p className="font-bold text-xs sm:text-sm text-[#202522] tabular-nums">Mon – Sat: 9:30 AM – 8:30 PM</p>
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
                   Send a Message
                 </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202522]">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#202522]">
                   Pilgrimage Inquiry Form
                 </h2>
                 <p className="text-xs sm:text-sm text-[#555555]">
@@ -169,7 +169,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <div className="w-16 h-16 rounded-full bg-[#EAF3EF] text-[#0B5D4B] flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-10 h-10 text-[#0B5D4B]" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-[#202522]">
+                  <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
                     JazakAllah Khair! Message Recorded
                   </h3>
                   <p className="text-xs sm:text-sm text-[#555555] max-w-md mx-auto leading-relaxed">
@@ -325,7 +325,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block">
                     Official Travel Agency
                   </span>
-                  <h3 className="font-serif text-2xl font-bold text-[#202522] mt-1">
+                  <h3 className="text-2xl font-semibold text-[#202522] mt-1 tracking-tight">
                     AS SAFAR HAJJ & UMRAH SERVICE
                   </h3>
                   <p className="text-xs text-[#0B5D4B] font-semibold">
@@ -344,7 +344,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       <p className="text-[#555555] leading-snug mt-1">
                         No. 41, First Floor, Tabs Complex,<br />
                         Opposite Child Jesus Hospital, Bharathidasan Salai,<br />
-                        Cantonment, Tiruchirappalli – 620001,<br />
+                        Cantonment, Tiruchirappalli – <span className="tabular-nums">620001</span>,<br />
                         Tamil Nadu, India.
                       </p>
                     </div>
@@ -358,7 +358,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       <span className="font-bold block text-sm text-[#202522]">Telephone / Mobile:</span>
                       <a
                         href={`tel:${BRAND_INFO.phoneTel}`}
-                        className="text-[#0B5D4B] font-bold hover:underline block mt-0.5"
+                        className="text-[#0B5D4B] font-bold hover:underline block mt-0.5 tabular-nums"
                       >
                         +91 95663 69654
                       </a>
@@ -371,7 +371,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                     </div>
                     <div>
                       <span className="font-bold block text-sm text-[#202522]">Visiting Hours:</span>
-                      <p className="text-[#555555] leading-snug mt-0.5">
+                      <p className="text-[#555555] leading-snug mt-0.5 tabular-nums">
                         Monday to Saturday: 9:30 AM – 8:30 PM<br />
                         Sunday: Prior appointment
                       </p>
@@ -426,7 +426,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <span className="text-xs font-bold text-[#0B5D4B] uppercase tracking-wider">
                 Find Us in Trichy
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202522]">
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#202522]">
                 Our Cantonment Office Location
               </h2>
             </div>

@@ -13,11 +13,14 @@ const translations: Record<Language, Record<string, string>> = {
     // Nav
     'nav.home': 'Home',
     'nav.packages': 'Umrah Packages',
+    'nav.monthlyUmrah': 'Monthly Umrah',
+    'nav.ramadanUmrah': 'Ramadan Umrah',
+    'nav.ziyarah': 'Ziyarah',
     'nav.hajj': 'Hajj 2027',
     'nav.about': 'About Us',
     'nav.faq': 'FAQ',
     'nav.contact': 'Contact',
-    'nav.enquire': 'Enquire Now',
+    'nav.enquire': 'Custom Package',
 
     // Hero
     'hero.trustBadge': 'Trusted Umrah Travel Assistance from Trichy',
@@ -60,11 +63,14 @@ const translations: Record<Language, Record<string, string>> = {
     // Nav
     'nav.home': 'முகப்பு',
     'nav.packages': 'உம்ரா பேக்கேஜ்கள்',
+    'nav.monthlyUmrah': 'மாதாந்திர உம்ரா',
+    'nav.ramadanUmrah': 'ரமலான் உம்ரா',
+    'nav.ziyarah': 'ஜியாரத்',
     'nav.hajj': 'ஹஜ் 2027',
     'nav.about': 'எங்களைப் பற்றி',
     'nav.faq': 'கேள்வி-பதில்',
     'nav.contact': 'தொடர்புக்கு',
-    'nav.enquire': 'விசாரிக்கவும்',
+    'nav.enquire': 'தனிப்பயன் பேக்கேஜ்',
 
     // Hero
     'hero.trustBadge': 'திருச்சியிலிருந்து நம்பகமான உம்ரா பயண உதவி',

@@ -48,7 +48,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
 
           {/* Quick Links (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-serif text-base font-bold text-[#C9A24D]">
+            <h4 className="text-base font-semibold text-[#C9A24D]">
               Quick Navigation
             </h4>
             <ul className="space-y-2 text-sm text-[#EAF3EF]/80">
@@ -66,14 +66,38 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
               </li>
               <li>
                 <a
-                  href="/umrah-packages"
+                  href="/monthly-umrah"
                   onClick={(e) => {
                     e.preventDefault();
-                    onNavigate('/umrah-packages');
+                    onNavigate('/monthly-umrah');
                   }}
                   className="hover:text-white transition-colors cursor-pointer text-left block"
                 >
-                  Umrah Packages
+                  Monthly Umrah
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/ramadan-umrah"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/ramadan-umrah');
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer text-left block"
+                >
+                  Ramadan Umrah
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/ziyarah"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/ziyarah');
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer text-left block"
+                >
+                  Ziyarah Tours
                 </a>
               </li>
               <li>
@@ -129,7 +153,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
 
           {/* Office Contact Info (4 cols) */}
           <div className="lg:col-span-4 space-y-3">
-            <h4 className="font-serif text-base font-bold text-[#C9A24D]">
+            <h4 className="text-base font-semibold text-[#C9A24D]">
               Trichy Office
             </h4>
             
@@ -139,7 +163,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
                 <p className="leading-snug">
                   {BRAND_INFO.addressLine1},<br />
                   {BRAND_INFO.addressLine2},<br />
-                  {BRAND_INFO.area}, {BRAND_INFO.city} – {BRAND_INFO.pincode},<br />
+                  {BRAND_INFO.area}, {BRAND_INFO.city} – <span className="tabular-nums">{BRAND_INFO.pincode}</span>,<br />
                   {BRAND_INFO.state}, India
                 </p>
               </div>
@@ -148,7 +172,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
                 <Phone className="w-4 h-4 text-[#C9A24D] shrink-0" />
                 <a
                   href={`tel:${BRAND_INFO.phoneTel}`}
-                  className="hover:text-white font-bold transition-colors"
+                  className="hover:text-white font-bold transition-colors tabular-nums"
                 >
                   {BRAND_INFO.phoneFormatted}
                 </a>
@@ -160,7 +184,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
                   href={`https://wa.me/919566369654?text=${encodeURIComponent(BRAND_INFO.whatsappMessage)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors tabular-nums"
                 >
                   WhatsApp: +91 95663 69654
                 </a>

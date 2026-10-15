@@ -62,7 +62,7 @@ export const GallerySection: React.FC = () => {
             <Camera className="w-3.5 h-3.5 text-[#C9A24D]" />
             <span>Sacred Landmarks & Pilgrims</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             Pilgrimage Moments
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -87,7 +87,7 @@ export const GallerySection: React.FC = () => {
                 }`}
               >
                 <span>{t.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-medium tabular-nums ${
                   filter === t.id ? 'bg-white/20 text-white' : 'bg-stone-100 text-[#555555]'
                 }`}>
                   {t.count}
@@ -129,7 +129,7 @@ export const GallerySection: React.FC = () => {
                   <span className="text-[10px] font-bold text-[#C9A24D] uppercase tracking-wider block">
                     {item.accentText}
                   </span>
-                  <h3 className="font-serif text-lg font-bold leading-tight mt-0.5 text-white">
+                  <h3 className="text-lg font-semibold leading-tight mt-0.5 text-white">
                     {item.title}
                   </h3>
                   <p className="text-xs text-white/90 flex items-center gap-1 mt-1">
@@ -215,7 +215,7 @@ export const GallerySection: React.FC = () => {
                     {selectedItem.category === 'hotels' ? 'Accommodation' : selectedItem.category}
                   </span>
                 </div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#202522]">
+                <h3 className="text-xl sm:text-2xl font-semibold text-[#202522] tracking-tight">
                   {selectedItem.title}
                 </h3>
                 <p className="text-xs text-[#666666] flex items-center gap-1.5 font-medium">

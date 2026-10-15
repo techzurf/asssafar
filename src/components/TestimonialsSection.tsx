@@ -21,7 +21,7 @@ export const TestimonialsSection: React.FC = () => {
             <span className="w-2 h-2 rounded-full bg-[#C9A24D]" />
             <span>Honest Pilgrim Reflections</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             What Our Pilgrims Say
           </h2>
           <p className="text-[#333333] text-base leading-relaxed">
@@ -44,7 +44,7 @@ export const TestimonialsSection: React.FC = () => {
               </div>
 
               {/* Quote text */}
-              <p className="font-serif text-base sm:text-lg text-[#202522] leading-relaxed italic">
+              <p className="text-base sm:text-lg text-[#202522] leading-relaxed italic">
                 "{TESTIMONIALS[currentIndex].quote}"
               </p>
 
@@ -58,7 +58,7 @@ export const TestimonialsSection: React.FC = () => {
                     {TESTIMONIALS[currentIndex].location} · {TESTIMONIALS[currentIndex].packageTaken}
                   </p>
                 </div>
-                <span className="text-xs text-[#202522] font-semibold bg-white border border-[#E5E5E0] px-3 py-1 rounded-full self-start sm:self-auto">
+                <span className="text-xs text-[#202522] font-semibold tabular-nums bg-white border border-[#E5E5E0] px-3 py-1 rounded-full self-start sm:self-auto">
                   {TESTIMONIALS[currentIndex].date}
                 </span>
               </div>

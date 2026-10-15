@@ -29,7 +29,7 @@ export const HajjModal: React.FC<HajjModalProps> = ({ isOpen, onClose, onOpenEnq
             <span>Hajj 2026 / 1447H Pre-Registration</span>
           </div>
 
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
+          <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
             Sacred Hajj Pilgrimage with As-Safar
           </h3>
           <p className="text-xs sm:text-sm text-[#EAF3EF]/90 mt-1">

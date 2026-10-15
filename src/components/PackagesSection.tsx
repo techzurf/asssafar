@@ -153,7 +153,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
             <span>{t('pkg.badge')}</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#202522] tracking-tight">
             {t('pkg.heading')}
           </h2>
 
@@ -175,14 +175,14 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
             return (
               <div
                 key={card.pkg.id || idx}
-                className={`group flex flex-col justify-between rounded-3xl bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                className={`umrah-package-card group flex flex-col justify-between overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
                   card.isPopular
-                    ? 'border-2 border-[#C9A24D]/70 shadow-md ring-1 ring-[#C9A24D]/20 md:last:col-span-1'
-                    : 'border border-[#E5E5E0] shadow-xs hover:border-[#0B5D4B]/30 md:last:col-span-2 lg:last:col-span-1 md:last:max-w-md md:last:mx-auto lg:last:max-w-none'
+                    ? 'shadow-md md:last:col-span-1'
+                    : 'shadow-xs md:last:col-span-2 lg:last:col-span-1 md:last:max-w-md md:last:mx-auto lg:last:max-w-none'
                 }`}
               >
                 {/* Large Photographic Image (Top ~55-60% visual presence) */}
-                <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#0A0D0C]">
+                <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#0A0D0C] rounded-t-[20px] z-[1]">
                   <img
                     src={card.image}
                     alt={card.imageAlt}
@@ -204,7 +204,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
 
                   {/* Highlight Duration & Label Overlaid on Image Bottom */}
                   <div className="absolute bottom-4 left-4 right-4 z-10 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold">
+                    <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold tabular-nums">
                       <Clock className="w-3.5 h-3.5 text-[#C9A24D]" />
                       <span>{card.highlight}</span>
                     </div>
@@ -217,9 +217,9 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
                 </div>
 
                 {/* Card Content Body */}
-                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1 space-y-6">
+                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1 space-y-6 rounded-b-[20px] bg-white z-[1]">
                   <div className="space-y-2.5">
-                    <h3 className="font-serif text-2xl font-bold text-[#202522] tracking-tight group-hover:text-[#0B5D4B] transition-colors">
+                    <h3 className="text-2xl font-semibold text-[#202522] tracking-tight group-hover:text-[#0B5D4B] transition-colors">
                       {card.title}
                     </h3>
 
@@ -245,7 +245,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
                               <p className="text-xs font-bold text-[#202522] leading-tight truncate">
                                 {fac.label}
                               </p>
-                              <p className="text-[11px] text-[#666666] leading-tight mt-0.5 truncate" title={fac.detail}>
+                              <p className="text-[11px] text-[#666666] leading-tight mt-0.5 truncate tabular-nums" title={fac.detail}>
                                 {fac.detail}
                               </p>
                             </div>
@@ -260,7 +260,7 @@ export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackag
                     <div className="flex items-baseline justify-between">
                       <span className="text-xs font-medium text-[#555555]">{t('pkg.starting')}</span>
                       <div className="text-right">
-                        <span className="font-serif text-2xl font-bold text-[#0B5D4B] tabular-nums">
+                        <span className="text-2xl font-bold text-[#0B5D4B] tabular-nums tracking-tight">
                           {card.pkg.startingPrice}
                         </span>
                         <span className="text-[11px] text-[#555555] block">

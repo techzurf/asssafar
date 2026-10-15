@@ -92,15 +92,15 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-[#C9A24D]/40 text-xs font-bold tracking-wider uppercase text-[#C9A24D]">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Tailored Pilgrimage Packages • Departures from Trichy & Chennai</span>
+              <span>Scheduled Monthly Departures • Trichy & Chennai</span>
             </div>
 
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-              Umrah Packages <span className="text-[#FFCE1B]">Curated for Devotion</span>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Monthly Umrah Packages <span className="text-[#FFCE1B]">Curated for Devotion</span>
             </h1>
 
             <p className="text-base sm:text-lg text-[#EAF3EF]/90 leading-relaxed max-w-2xl">
-              Experience the tranquility of Makkah and Madinah with As-Safar. We provide verified hotel proximities, Tamil-speaking scholars, wholesome South Indian dining, and caring on-ground tour managers.
+              Experience the tranquility of Makkah and Madinah with As-Safar’s regular monthly group departures. We provide verified hotel proximities, Tamil-speaking scholars, wholesome South Indian dining, and caring on-ground tour managers.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -119,7 +119,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
                 className="bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-xl border border-white/20 transition-all flex items-center gap-2"
               >
                 <Phone className="w-4 h-4 text-[#C9A24D]" />
-                <span>Call +91 95663 69654</span>
+                <span className="tabular-nums">Call +91 95663 69654</span>
               </a>
             </div>
           </div>
@@ -134,7 +134,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
               <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">
                 Transparent Pilgrimage Planning
               </span>
-              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#202522]">
+              <h2 className="text-2xl sm:text-4xl font-bold text-[#202522]">
                 Every Package Designed with Pilgrim Well-Being at Heart
               </h2>
               <p className="text-[#555555] text-sm sm:text-base leading-relaxed">
@@ -193,7 +193,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
       <section className="py-16 sm:py-20 bg-[#FFFFFF]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#202522]">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#202522]">
               Explore Our Umrah Packages
             </h2>
             <p className="text-sm sm:text-base text-[#555555]">
@@ -233,11 +233,11 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
                       </div>
 
                       <div className="absolute bottom-3 left-3 right-3 text-white">
-                        <p className="text-xs font-semibold text-[#FFCE1B] flex items-center gap-1">
+                        <p className="text-xs font-semibold text-[#FFCE1B] flex items-center gap-1 tabular-nums">
                           <Clock className="w-3.5 h-3.5" />
                           <span>{pkg.duration}</span>
                         </p>
-                        <h3 className="font-serif text-xl sm:text-2xl font-bold leading-tight">
+                        <h3 className="text-xl sm:text-2xl font-semibold leading-tight">
                           {pkg.name}
                         </h3>
                       </div>
@@ -250,7 +250,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
                           Starting From
                         </span>
                         <div className="flex items-baseline gap-1.5 mt-0.5">
-                          <span className="font-serif text-2xl sm:text-3xl font-extrabold text-[#0B5D4B]">
+                          <span className="text-2xl sm:text-3xl font-bold text-[#0B5D4B] tabular-nums tracking-tight">
                             {pkg.startingPrice}
                           </span>
                           <span className="text-xs text-[#555555]">/ pilgrim</span>
@@ -369,7 +369,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
             <span className="text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">
               Comprehensive Care
             </span>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#202522]">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#202522]">
               Complete Umrah Services Included
             </h2>
             <p className="text-sm text-[#555555]">
@@ -416,7 +416,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
                   <div className="w-10 h-10 rounded-xl bg-[#F5F3EE] text-[#0B5D4B] flex items-center justify-center">
                     <Icon className="w-5 h-5 text-[#0B5D4B]" />
                   </div>
-                  <h3 className="font-serif font-bold text-base text-[#202522]">{srv.title}</h3>
+                  <h3 className="font-semibold text-base text-[#202522]">{srv.title}</h3>
                   <p className="text-xs text-[#555555] leading-relaxed">{srv.desc}</p>
                 </div>
               );
@@ -429,11 +429,11 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
       <section className="py-14 sm:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202522]">
-              Umrah Packages Questions
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#202522]">
+              Monthly Umrah Questions
             </h2>
             <p className="text-sm text-[#555555]">
-              Common queries from pilgrims planning an Umrah journey with As-Safar.
+              Common queries from pilgrims planning a scheduled monthly Umrah journey with As-Safar.
             </p>
           </div>
 
@@ -444,7 +444,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
                 <div key={i} className="border border-[#E5E5E0] rounded-2xl overflow-hidden bg-[#F8F7F3]">
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? null : i)}
-                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-serif font-bold text-base text-[#202522] cursor-pointer"
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-base text-[#202522] cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown className={`w-4 h-4 text-[#0B5D4B] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -464,7 +464,7 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
       {/* 6. Prominent WhatsApp / Call Enquiry Banner */}
       <section className="py-12 bg-[#07382E] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white">
             Need a Customized Date or Private Room for Your Family?
           </h2>
           <p className="text-sm sm:text-base text-[#EAF3EF]/90 max-w-2xl mx-auto">
@@ -493,3 +493,5 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
     </div>
   );
 };
+
+export const MonthlyUmrahPage = UmrahPackagesPage;
