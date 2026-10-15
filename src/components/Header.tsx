@@ -204,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({
         }`}
       >
         {/* Hanging License Tag suspended from top edge below announcement bar */}
-        <div className="absolute right-3 sm:right-8 lg:right-16 top-0 z-30 pointer-events-none">
+        <div className="absolute right-16 sm:right-28 md:right-32 lg:right-24 xl:right-36 top-0 z-30 pointer-events-none">
           <LicenseBadge variant="hanging" />
         </div>
 
@@ -411,14 +411,14 @@ export const Header: React.FC<HeaderProps> = ({
             </nav>
 
             {/* Zone 3: Primary Actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3">
               {/* Language Switcher Component */}
               <LanguageSwitcher />
 
-              {/* Mobile quick action icons (< 1024px) */}
+              {/* Quick action call & WhatsApp buttons - Visible on desktop (lg:flex), Hidden on mobile (< lg) */}
               <a
                 href={`tel:${BRAND_INFO.phoneTel}`}
-                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] active:bg-[#0B5D4B] active:text-white transition-colors"
+                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] hover:bg-[#0B5D4B] hover:text-white transition-colors"
                 aria-label="Call As-Safar"
               >
                 <Phone className="w-4 h-4 text-[#C9A24D]" />
@@ -428,7 +428,7 @@ export const Header: React.FC<HeaderProps> = ({
                 href={`https://wa.me/919566369654?text=${encodeURIComponent(BRAND_INFO.whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] active:bg-[#0B5D4B] active:text-white transition-colors"
+                className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] hover:bg-[#0B5D4B] hover:text-white transition-colors"
                 aria-label="WhatsApp As-Safar"
               >
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
@@ -443,7 +443,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] active:bg-[#0B5D4B] active:text-white transition-colors cursor-pointer"
+                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-[#F8F7F3] text-[#202522] border border-[#E5E5E0] active:bg-[#0B5D4B] active:text-white transition-colors cursor-pointer shrink-0"
                 aria-label={isMobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
                 aria-expanded={isMobileMenuOpen}
               >
@@ -606,6 +606,25 @@ export const Header: React.FC<HeaderProps> = ({
                   <Sparkles className="w-4 h-4 text-white" />
                   <span>{t('nav.enquire')}</span>
                 </button>
+              </div>
+              {/* Quick Contact Row in Mobile Drawer */}
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E5E5E0]">
+                <a
+                  href={`tel:${BRAND_INFO.phoneTel}`}
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#F8F7F3] text-[#0B5D4B] border border-[#E5E5E0] font-semibold text-xs active:bg-[#0B5D4B] active:text-white transition-colors"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#C9A24D]" />
+                  <span>Call Us</span>
+                </a>
+                <a
+                  href={`https://wa.me/919566369654?text=${encodeURIComponent(BRAND_INFO.whatsappMessage)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#25D366]/10 text-[#075E4E] border border-[#25D366]/30 font-semibold text-xs active:bg-[#25D366] active:text-white transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span>WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
