@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { PageRoute } from '../routes';
 import { FaqSection } from '../components/FaqSection';
+import { LicenseBadge } from '../components/LicenseBadge';
 
 interface AboutUsPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -65,7 +66,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
         </div>
       </section>
 
-      {/* 2. Mission & Pilgrimage Approach */}
+      {/* 2. Mission, Registration Badge & Pilgrimage Approach */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -84,6 +85,11 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
               <p className="text-[#555555] text-sm sm:text-base leading-relaxed">
                 At As-Safar, we approach pilgrimage travel not merely as a commercial booking service, but as an Amanah (a sacred trust). We tailor every journey to the unique needs of families from Tamil Nadu—arranging authentic South Indian home-style dining, patient Tamil-speaking Aalims, wheelchair assistance for parents, and zero-slope hotel entries in Makkah.
               </p>
+
+              {/* Highlighted License Registration Badge */}
+              <div className="pt-2">
+                <LicenseBadge />
+              </div>
 
               <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-[#F8F7F3] p-4 rounded-2xl border border-[#E5E5E0]">
@@ -253,7 +259,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
         </div>
       </section>
 
-      {/* 5. Frequently Asked Questions Section (Embedded FAQ) */}
+      {/* 5. Frequently Asked Questions Section */}
       <FaqSection />
 
       {/* 6. Prominent Contact / Enquiry Call to Action */}

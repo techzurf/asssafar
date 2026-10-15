@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, MapPin, MessageCircle, Heart } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
 import { PageRoute } from '../routes';
+import { LicenseBadge } from './LicenseBadge';
 
 interface FooterProps {
   onOpenHajj: () => void;
@@ -14,7 +15,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
     <footer className="bg-[#07382E] text-white pt-14 pb-20 sm:pb-14 border-t border-[#0B5D4B]/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-white/10">
-          {/* Brand Info (4 cols) */}
+          {/* Brand Info & Compact Registration Badge (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <a
               href="/"
@@ -40,8 +41,12 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
               Your trusted partner for a comfortable, guided and spiritually meaningful Umrah journey.
             </p>
 
-            <div className="pt-2 text-xs text-[#EAF3EF]/70 space-y-1">
-              <p>Government Approved Travel Services</p>
+            {/* Compact Registration Badge in Footer */}
+            <div className="pt-1">
+              <LicenseBadge variant="footer" />
+            </div>
+
+            <div className="pt-1 text-xs text-[#EAF3EF]/70 space-y-1">
               <p>Specialized Makkah & Madinah Pilgrimage Operations</p>
             </div>
           </div>
@@ -112,17 +117,28 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
                   Hajj 2027 Advance Registration
                 </a>
               </li>
-
               <li>
                 <a
-                  href="/faq"
+                  href="/about-us"
                   onClick={(e) => {
                     e.preventDefault();
-                    onNavigate('/faq');
+                    onNavigate('/about-us');
                   }}
                   className="hover:text-white transition-colors cursor-pointer text-left block"
                 >
-                  FAQ
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/gallery"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('/gallery');
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer text-left block"
+                >
+                  Gallery
                 </a>
               </li>
               <li>
@@ -191,9 +207,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright */}
+        {/* Bottom Bar: Copyright & Reg Info */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#EAF3EF]/60 gap-3">
-          <p>© 2026 As-Safar. All Rights Reserved.</p>
+          <p>© 2026 As-Safar. Reg. No. <span className="font-mono text-white/90 font-bold select-all">TN03786327/Cat-II/29848/2027</span>. All Rights Reserved.</p>
           <p className="flex items-center gap-1">
             <span>Crafted with devotion for the pilgrims of Tamil Nadu</span>
             <Heart className="w-3 h-3 text-[#C9A24D] fill-[#C9A24D]" />

@@ -1,11 +1,12 @@
 import React from 'react';
-import { ShieldCheck, Heart, Users, MapPin, CheckCircle, Sparkles } from 'lucide-react';
+import { ShieldCheck, Heart, Users, CheckCircle, Sparkles } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
+import { LicenseBadge } from './LicenseBadge';
 
 export const AboutSection: React.FC = () => {
   return (
     <section id="about" className="py-14 sm:py-20 bg-[#F5F3EE]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Story & Ethos */}
           <div className="lg:col-span-7 space-y-6">
@@ -52,14 +53,18 @@ export const AboutSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Office & Trust Card */}
-          <div className="lg:col-span-5">
-            <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-8 border border-[#E5E5E0] shadow-sm space-y-6">
+          {/* Right Column: License Badge & Office Card */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Highlighted License Registration Badge */}
+            <LicenseBadge />
+
+            {/* Office & Trust Card */}
+            <div className="bg-[#FFFFFF] rounded-3xl p-6 sm:p-7 border border-[#E5E5E0] shadow-xs space-y-5">
               <div className="space-y-1">
                 <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block">
                   Trichy Headquarters
                 </span>
-                <h3 className="text-2xl font-semibold text-[#202522] tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-semibold text-[#202522] tracking-tight">
                   Tabs Complex, Cantonment
                 </h3>
                 <p className="text-xs text-[#555555]">
@@ -69,8 +74,8 @@ export const AboutSection: React.FC = () => {
 
               <div className="p-4 rounded-2xl bg-[#F8F7F3] border border-[#E5E5E0] space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
-                    <Users className="w-5 h-5 text-[#C9A24D]" />
+                  <div className="w-9 h-9 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
+                    <Users className="w-4 h-4 text-[#C9A24D]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-[#202522]">Face-to-Face Consultation</h4>
@@ -79,8 +84,8 @@ export const AboutSection: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
+                  <div className="w-9 h-9 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-4 h-4 text-[#C9A24D]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-[#202522]">Authorized & Verified</h4>
@@ -89,8 +94,8 @@ export const AboutSection: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
-                    <Heart className="w-5 h-5 text-[#C9A24D]" />
+                  <div className="w-9 h-9 rounded-xl bg-[#0B5D4B] text-white flex items-center justify-center shrink-0">
+                    <Heart className="w-4 h-4 text-[#C9A24D]" />
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-[#202522]">Family-Centric Care</h4>
@@ -99,10 +104,10 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <a
                   href={`tel:${BRAND_INFO.phoneTel}`}
-                  className="w-full bg-[#0B5D4B] hover:bg-[#084538] text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs hover:shadow-md active:scale-95"
+                  className="w-full bg-[#0B5D4B] hover:bg-[#084538] text-white font-bold text-sm py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-xs hover:shadow-md active:scale-95 cursor-pointer"
                 >
                   <span>Connect With Our Trichy Team</span>
                 </a>

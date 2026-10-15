@@ -5,6 +5,7 @@ import { PackagesSection } from '../components/PackagesSection';
 import { FeaturedPackage } from '../components/FeaturedPackage';
 import { InstagramReelsSection } from '../components/InstagramReelsSection';
 import { GoogleReviewsSection } from '../components/GoogleReviewsSection';
+import { AboutSection } from '../components/AboutSection';
 import { UmrahJourney } from '../components/UmrahJourney';
 import { ServicesSection } from '../components/ServicesSection';
 import { GallerySection } from '../components/GallerySection';
@@ -45,16 +46,19 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* Featured Package Spotlight (Premium Umrah Experience) */}
       <FeaturedPackage onGetDetails={() => onOpenEnquiry('premium')} />
 
+      {/* About As-Safar & Highlighted License Registration Badge */}
+      <AboutSection />
+
       {/* Instagram Reels Section */}
       <InstagramReelsSection />
 
-      {/* Google Reviews Section (4.9 Rating from 91 Google Reviews) */}
+      {/* Google Reviews Section */}
       <GoogleReviewsSection />
 
       {/* Umrah Journey (7-step interactive visual roadmap) */}
       <UmrahJourney />
 
-      {/* Comprehensive Services Grid (10 services) */}
+      {/* Comprehensive Services Grid */}
       <ServicesSection />
 
       {/* Sacred Moments Gallery */}

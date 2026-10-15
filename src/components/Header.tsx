@@ -216,12 +216,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B5D4B] rounded-xl shrink-0"
               aria-label="As-Safar Home"
             >
-              <div className="as-safar-logo-frame">
-                <Logo
-                  className="h-10 sm:h-12 w-auto object-contain"
-                  loading="eager"
-                />
-              </div>
+
             </a>
 
             {/* Zone 2: Navigation Links (Desktop 1024px+) */}
