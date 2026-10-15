@@ -539,74 +539,7 @@
   }
 }
 
-/* Animated multicolor outline — Choose Your Sacred Journey only */
-.journey-heading {
-  position: relative;
-  display: inline-block;
-  isolation: isolate;
-}
 
-.journey-heading .journey-heading-base {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  color: #111827;
-}
-
-
-
-.journey-heading .journey-heading-outline text {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
-  text-anchor: middle;
-  dominant-baseline: central;
-  fill: none;
-  stroke-width: 2.5;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  stroke-dasharray: 70 330;
-  stroke-dashoffset: 0;
-  animation: journeyHeadingStroke 6s linear infinite;
-}
-
-.journey-heading .journey-heading-outline text:nth-child(1) {
-  stroke: #F2385A;
-  animation-delay: -1.2s;
-}
-
-.journey-heading .journey-heading-outline text:nth-child(2) {
-  stroke: #F5A503;
-  animation-delay: -2.4s;
-}
-
-.journey-heading .journey-heading-outline text:nth-child(3) {
-  stroke: #E9F1DF;
-  animation-delay: -3.6s;
-}
-
-.journey-heading .journey-heading-outline text:nth-child(4) {
-  stroke: #56D9CD;
-  animation-delay: -4.8s;
-}
-
-.journey-heading .journey-heading-outline text:nth-child(5) {
-  stroke: #3AA1BF;
-  animation-delay: -6s;
-}
-
-@keyframes journeyHeadingStroke {
-  100% {
-    stroke-dashoffset: -400;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .journey-heading .journey-heading-outline text {
-    animation: none;
-  }
-}
 
 /* ==========================================================================
    Subtle 1.5 degree Swinging Animation for Hanging License Tag
