@@ -1,23 +1,12 @@
 import React from 'react';
-import { MessageCircle, Phone } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { BRAND_INFO } from '../data/content';
 
 export const FloatingWhatsApp: React.FC = () => {
   const whatsappUrl = `https://wa.me/919566369654?text=${encodeURIComponent(BRAND_INFO.whatsappMessage)}`;
 
   return (
-    <div className="fixed z-40 flex flex-col items-end gap-2.5 bottom-[76px] right-3 sm:right-4 md:bottom-8 md:right-8 transition-all duration-300">
-      {/* Quick Mobile Call Pill (shown cleanly on small screens) */}
-      <a
-        href={`tel:${BRAND_INFO.phoneTel}`}
-        className="sm:hidden flex items-center gap-1.5 bg-[#17332D] text-white px-3 py-2 rounded-full shadow-lg text-xs font-semibold hover:bg-[#0B5D4B] transition-transform active:scale-95"
-        aria-label="Call As-Safar"
-      >
-        <Phone className="w-3.5 h-3.5 text-[#C9A24D]" />
-        <span>Call</span>
-      </a>
-
-      {/* WhatsApp Floating Button */}
+    <div className="fixed z-40 bottom-[76px] right-3 sm:right-4 md:bottom-8 md:right-8 transition-all duration-300">
       <a
         href={whatsappUrl}
         target="_blank"

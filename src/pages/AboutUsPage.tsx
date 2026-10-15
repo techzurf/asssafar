@@ -3,19 +3,13 @@ import {
   Sparkles, 
   ShieldCheck, 
   Heart, 
-  Users, 
   MapPin, 
   CheckCircle, 
-  Phone, 
   MessageCircle, 
-  Building, 
-  Compass, 
-  Award,
-  BookOpen,
-  Calendar
+  BookOpen
 } from 'lucide-react';
-import { BRAND_INFO } from '../data/content';
 import { PageRoute } from '../routes';
+import { FaqSection } from '../components/FaqSection';
 
 interface AboutUsPageProps {
   onNavigate: (route: PageRoute) => void;
@@ -259,7 +253,10 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigate, onOpenEnqu
         </div>
       </section>
 
-      {/* 5. Prominent Contact / Enquiry Call to Action */}
+      {/* 5. Frequently Asked Questions Section (Embedded FAQ) */}
+      <FaqSection />
+
+      {/* 6. Prominent Contact / Enquiry Call to Action */}
       <section className="py-12 bg-[#07382E] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <h2 className="text-2xl sm:text-4xl font-bold text-white">

@@ -112,18 +112,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenHajj, onOpenEnquiry, onNav
                   Hajj 2027 Advance Registration
                 </a>
               </li>
-              <li>
-                <a
-                  href="/about-us"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate('/about-us');
-                  }}
-                  className="hover:text-white transition-colors cursor-pointer text-left block"
-                >
-                  About Us
-                </a>
-              </li>
+
               <li>
                 <a
                   href="/faq"

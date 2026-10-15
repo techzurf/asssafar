@@ -22,6 +22,7 @@ import { RamadanUmrahPage } from './pages/RamadanUmrahPage';
 import { ZiyarahPage } from './pages/ZiyarahPage';
 import { HajjPage } from './pages/HajjPage';
 import { AboutUsPage } from './pages/AboutUsPage';
+import { GalleryPage } from './pages/GalleryPage';
 import { FaqPage } from './pages/FaqPage';
 import { ContactPage } from './pages/ContactPage';
 
@@ -121,6 +122,13 @@ export default function App() {
 
           {currentPage === '/about-us' && (
             <AboutUsPage
+              onNavigate={navigateTo}
+              onOpenEnquiry={() => handleOpenEnquiry('premium')}
+            />
+          )}
+
+          {currentPage === '/gallery' && (
+            <GalleryPage
               onNavigate={navigateTo}
               onOpenEnquiry={() => handleOpenEnquiry('premium')}
             />

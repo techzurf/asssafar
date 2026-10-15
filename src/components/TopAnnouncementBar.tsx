@@ -17,43 +17,43 @@ export const TopAnnouncementBar: React.FC = () => {
 
   // Single unit of the announcement text
   const AnnouncementItem = () => (
-    <div className="inline-flex items-center text-xs sm:text-[13px] text-white tracking-wide whitespace-nowrap px-4 select-none">
+    <div className="inline-flex items-center text-[11px] sm:text-xs text-white tracking-wide whitespace-nowrap px-3 sm:px-4 select-none">
       {/* Kaaba Emoji & Badge */}
-      <span className="mr-1.5 text-sm sm:text-base leading-none" aria-hidden="true">
+      <span className="mr-1.5 text-xs sm:text-sm leading-none" aria-hidden="true">
         🕋
       </span>
-      <span className="font-bold text-[#FFCE1B] tracking-wider uppercase text-[11px] sm:text-xs">
+      <span className="font-bold text-[#FFCE1B] tracking-wider uppercase text-[10px] sm:text-xs">
         {prefixBadge}
       </span>
 
       {/* Gold Separator */}
-      <span className="text-[#C9A24D] mx-2.5 sm:mx-3 font-light" aria-hidden="true">
+      <span className="text-[#C9A24D] mx-2 sm:mx-3 font-light" aria-hidden="true">
         |
       </span>
 
       {/* Departure Date */}
       <span className="inline-flex items-center gap-1">
         <span className="text-[#EAF3EF]/90 font-medium">Departure Date:</span>{' '}
-        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20 tabular-nums">
+        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[10px] sm:text-xs border border-white/20 tabular-nums">
           {departureDate}
         </strong>
       </span>
 
       {/* Gold Separator */}
-      <span className="text-[#C9A24D] mx-2.5 sm:mx-3 font-light" aria-hidden="true">
+      <span className="text-[#C9A24D] mx-2 sm:mx-3 font-light" aria-hidden="true">
         |
       </span>
 
       {/* Departure Time */}
       <span className="inline-flex items-center gap-1">
         <span className="text-[#EAF3EF]/90 font-medium">Departure Time:</span>{' '}
-        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[11px] sm:text-xs border border-white/20 tabular-nums">
+        <strong className="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded text-[10px] sm:text-xs border border-white/20 tabular-nums">
           {departureTime}
         </strong>
       </span>
 
       {/* Gold Separator */}
-      <span className="text-[#C9A24D] mx-2.5 sm:mx-3 font-light" aria-hidden="true">
+      <span className="text-[#C9A24D] mx-2 sm:mx-3 font-light" aria-hidden="true">
         |
       </span>
 
@@ -71,7 +71,7 @@ export const TopAnnouncementBar: React.FC = () => {
       </a>
 
       {/* Repeating Star Separator */}
-      <span className="text-[#C9A24D] mx-5 sm:mx-8 text-xs font-bold" aria-hidden="true">
+      <span className="text-[#C9A24D] mx-4 sm:mx-8 text-xs font-bold" aria-hidden="true">
         ✦
       </span>
     </div>
@@ -81,7 +81,7 @@ export const TopAnnouncementBar: React.FC = () => {
     <aside
       role="region"
       aria-label="Upcoming Umrah Group Departure Announcement"
-      className="group relative w-full overflow-hidden bg-[#073E32] border-b border-[#0B5D4B]/50 h-[36px] sm:h-[40px] flex items-center z-50 shadow-2xs"
+      className="group relative w-full overflow-hidden bg-[#073E32] border-b border-[#0B5D4B]/50 h-[32px] sm:h-[38px] flex items-center z-50 shadow-2xs"
     >
       {/* Edge gradient scrims for clean continuous fade in/out */}
       <div 

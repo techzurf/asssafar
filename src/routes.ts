@@ -11,6 +11,7 @@ export type PageRoute =
   | '/ziyarah'
   | '/hajj-2027'
   | '/about-us'
+  | '/gallery'
   | '/faq'
   | '/contact';
 
@@ -61,8 +62,14 @@ export const ROUTES: Record<string, RouteInfo> = {
   about: {
     path: '/about-us',
     label: 'About Us',
-    title: 'About As-Safar | Trusted Umrah & Hajj Services from Trichy, Tamil Nadu',
-    metaDescription: 'Learn about As-Safar Hajj & Umrah Tours & Travels. Rooted in Cantonment Trichy, offering authentic pilgrim care, transparent pricing, and experienced scholar leadership.',
+    title: 'About As-Safar | Trusted Umrah & Hajj Services & FAQ | Trichy, Tamil Nadu',
+    metaDescription: 'Learn about As-Safar Hajj & Umrah Tours & Travels and find answers to frequently asked questions on packages, visas, hotels, and senior citizen guidance.',
+  },
+  gallery: {
+    path: '/gallery',
+    label: 'Gallery',
+    title: 'As-Safar Gallery | Umrah & Hajj Pilgrimage Photos & Moments | Trichy',
+    metaDescription: 'Explore authentic photos from As-Safar Umrah and Hajj journeys. View pilgrim group gatherings, Makkah al-Mukarramah, Madinah al-Munawwarah, and Ziyarah landmarks.',
   },
   faq: {
     path: '/faq',
@@ -99,6 +106,9 @@ export function normalizePathname(pathname: string): PageRoute {
   }
   if (cleaned === '/about-us' || cleaned === '/about') {
     return '/about-us';
+  }
+  if (cleaned === '/gallery' || cleaned === '/photos' || cleaned === '/photo-gallery') {
+    return '/gallery';
   }
   if (cleaned === '/faq' || cleaned === '/faqs') {
     return '/faq';

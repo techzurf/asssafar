@@ -10,7 +10,7 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section className="py-14 sm:py-20 bg-[#FFFFFF]">
+    <section id="faq" className="py-14 sm:py-20 bg-[#FFFFFF]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-3 mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F3EE] border border-[#E5E5E0] text-xs font-bold uppercase tracking-wider text-[#0B5D4B]">

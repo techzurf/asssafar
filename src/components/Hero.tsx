@@ -185,7 +185,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
   return (
     <section 
       id="home" 
-      className="relative w-full overflow-hidden bg-[#0A0D0C] text-white min-h-[560px] sm:min-h-[600px] lg:h-[640px] flex items-center"
+      className="relative w-full overflow-hidden bg-[#0A0D0C] text-white min-h-[500px] sm:min-h-[600px] lg:h-[640px] flex items-center"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
@@ -227,7 +227,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
       </div>
 
       {/* Main Content Area - Overlaid on the Background with Staggered Entrance Animation */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 lg:py-24">
         <div className="max-w-2xl lg:max-w-3xl text-left">
           {slides.map((slide, index) => {
             const isActive = index === currentSlide;
@@ -236,32 +236,32 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
             return (
               <div 
                 key={slide.id} 
-                className="space-y-5 sm:space-y-6 animate-hero-content"
+                className="space-y-4 sm:space-y-6 animate-hero-content"
               >
                 {/* Small Trust Badge */}
                 <div 
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-[#C9A24D]/50 text-xs sm:text-sm font-medium text-white shadow-xs"
+                  className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-[#C9A24D]/50 text-[11px] sm:text-sm font-medium text-white shadow-xs"
                 >
                   {slide.badge}
                 </div>
 
                 {/* Main Heading */}
                 <h1 
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.15] text-balance drop-shadow-md"
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.18] text-balance drop-shadow-md"
                 >
                   {slide.headline}
                 </h1>
 
                 {/* Supporting Text */}
                 <p 
-                  className="text-white/90 text-base sm:text-lg md:text-xl font-normal max-w-2xl leading-relaxed drop-shadow-xs"
+                  className="text-white/90 text-xs sm:text-lg md:text-xl font-normal max-w-2xl leading-relaxed drop-shadow-xs"
                 >
                   {slide.description}
                 </p>
 
                 {/* Key Trust Signals Bar */}
                 <div 
-                  className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-1 text-xs sm:text-sm text-white/90"
+                  className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2 pt-1 text-xs sm:text-sm text-white/90"
                 >
                   {slide.trustSignals.map((sig, sIdx) => (
                     <div key={sIdx} className="flex items-center gap-1.5 bg-black/30 sm:bg-transparent px-2.5 py-1 sm:p-0 rounded-lg backdrop-blur-xs sm:backdrop-blur-none">
@@ -273,11 +273,11 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
 
                 {/* Primary & Secondary Action Buttons */}
                 <div 
-                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-3"
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 pt-2 sm:pt-3"
                 >
                   <button
                     onClick={slide.primaryBtn.action}
-                    className="bg-[#0B5D4B] hover:bg-[#084538] text-white font-bold text-sm sm:text-base px-6 sm:px-8 py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px] cursor-pointer"
+                    className="bg-[#0B5D4B] hover:bg-[#084538] text-white font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px] cursor-pointer"
                   >
                     {slide.primaryBtn.icon}
                     <span>{slide.primaryBtn.text}</span>
@@ -285,7 +285,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
 
                   <button
                     onClick={slide.secondaryBtn.action}
-                    className="bg-white/10 hover:bg-white/20 text-white border border-white/25 font-semibold text-sm sm:text-base px-6 sm:px-7 py-3.5 rounded-xl backdrop-blur-md transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px] cursor-pointer"
+                    className="bg-white/10 hover:bg-white/20 text-white border border-white/25 font-semibold text-sm sm:text-base px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl backdrop-blur-md transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.98] min-h-[48px] cursor-pointer"
                   >
                     {slide.secondaryBtn.icon}
                     <span>{slide.secondaryBtn.text}</span>
@@ -313,10 +313,6 @@ export const Hero: React.FC<HeroProps> = ({ onExplorePackages, onTalkToTeam, onO
       >
         <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
-
-
     </section>
   );
 };
-
-

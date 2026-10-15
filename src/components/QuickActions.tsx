@@ -13,21 +13,21 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
 
   return (
     <section className="relative z-10 -mt-6 sm:-mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E5E0] p-3 sm:p-4">
+      <div className="bg-[#FFFFFF] rounded-2xl sm:rounded-3xl shadow-sm border border-[#E5E5E0] p-2.5 sm:p-4">
         {/* Mobile: 2x2 grid / Desktop: 4 equal cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           {/* Card 1 — Explore Umrah Packages: Royal blue gradient (#2563EB to #60A5FA) */}
           <button
             onClick={onScrollToPackages}
-            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] text-white shadow-md shadow-blue-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            className="flex items-center gap-2 sm:gap-3.5 p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] text-white shadow-md shadow-blue-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/35 group min-h-[68px] sm:min-h-[78px] overflow-hidden relative"
             aria-label="Explore Umrah Packages"
           >
             {/* White compass/explore icon inside translucent light-blue container */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
-              <Compass className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Compass className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+              <p className="text-[10px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
                 {t('quick.explore') || 'Explore'}
               </p>
               <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
@@ -39,15 +39,15 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
           {/* Card 2 — Hajj 2027: Purple gradient (#7C3AED to #A78BFA) */}
           <button
             onClick={onOpenHajj}
-            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] text-white shadow-md shadow-purple-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            className="flex items-center gap-2 sm:gap-3.5 p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] text-white shadow-md shadow-purple-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/35 group min-h-[68px] sm:min-h-[78px] overflow-hidden relative"
             aria-label="Pre-Register Hajj 2027"
           >
             {/* White crescent moon icon inside translucent lavender container */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
-              <Moon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Moon className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+              <p className="text-[10px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
                 {t('quick.preregi') || 'Pre-Register'}
               </p>
               <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
@@ -59,15 +59,15 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
           {/* Card 3 — Call Us: Coral/orange gradient (#EA580C to #FB923C) */}
           <a
             href={`tel:${BRAND_INFO.phoneTel}`}
-            className="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#EA580C] to-[#FB923C] text-white shadow-md shadow-orange-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            className="flex items-center gap-2 sm:gap-3.5 p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-[#EA580C] to-[#FB923C] text-white shadow-md shadow-orange-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/35 group min-h-[68px] sm:min-h-[78px] overflow-hidden relative"
             aria-label="Direct Dial Call Us"
           >
             {/* White telephone icon inside translucent peach container */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
-              <Phone className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 group-hover:bg-white/25 transition-all duration-300">
+              <Phone className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
+              <p className="text-[10px] sm:text-xs text-white/85 font-medium leading-none mb-1 truncate">
                 {t('quick.direct') || 'Direct Dial'}
               </p>
               <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
@@ -82,14 +82,14 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
             target="_blank"
             rel="noopener noreferrer"
             title="Read 92 Google Reviews for As-Safar Hajj & Umrah Service"
-            className="google-reviews-card flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#0F766E] to-[#2DD4BF] text-white shadow-md shadow-teal-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/35 group min-h-[72px] sm:min-h-[78px] overflow-hidden relative"
+            className="google-reviews-card flex items-center gap-2 sm:gap-3.5 p-2.5 sm:p-4 rounded-2xl bg-gradient-to-br from-[#0F766E] to-[#2DD4BF] text-white shadow-md shadow-teal-500/20 border border-white/20 transition-all duration-300 ease-out text-left cursor-pointer active:scale-[0.98] hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/35 group min-h-[68px] sm:min-h-[78px] overflow-hidden relative"
             aria-label="Google Reviews 4.9 rating 92 reviews"
           >
             {/* Subtle soft white ripple effect */}
             <span className="google-reviews-ripple" aria-hidden="true" />
 
             {/* Google logo inside white rounded container */}
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shrink-0 shadow-xs border border-white/30 group-hover:scale-105 transition-all duration-300">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white p-2 flex items-center justify-center shrink-0 shadow-xs border border-white/30 group-hover:scale-105 transition-all duration-300">
               <svg className="w-full h-full" viewBox="0 0 24 24" aria-label="Google logo">
                 <path
                   fill="#4285F4"
@@ -110,8 +110,8 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5 mb-1 min-w-0">
-                <p className="text-[11px] sm:text-xs text-white/90 font-medium leading-none truncate">
+              <div className="flex items-center gap-1 mb-1 min-w-0">
+                <p className="text-[10px] sm:text-xs text-white/90 font-medium leading-none truncate">
                   {t('quick.reviews') || 'Google Reviews'}
                 </p>
                 <div className="flex items-center shrink-0" aria-label="5 stars">
@@ -124,7 +124,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onScrollToPackages, 
                 </div>
               </div>
               <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
-                4.9 Rating <span className="text-[11px] sm:text-xs font-normal text-white/90">· 92 Google Reviews</span>
+                4.9 ★ <span className="text-[10px] sm:text-xs font-medium text-white/90">· 92 Reviews</span>
               </p>
             </div>
           </a>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Compass, Moon, HelpCircle, PhoneCall, X, Calendar, Sparkles } from 'lucide-react';
+import { Home, Compass, Moon, Camera, PhoneCall, X, Calendar, Sparkles } from 'lucide-react';
 import { PageRoute } from '../routes';
 
 interface MobileBottomNavProps {
@@ -144,32 +144,32 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ currentPage, o
             </span>
           </button>
 
-          {/* 4. FAQ */}
+          {/* 4. Gallery */}
           <button
             onClick={() => {
               setIsPackagesSheetOpen(false);
-              onNavigate('/faq');
+              onNavigate('/gallery');
             }}
             className={`flex flex-col items-center justify-center py-1 transition-all duration-200 relative min-h-[44px] touch-manipulation focus:outline-none cursor-pointer ${
-              currentPage === '/faq' ? 'text-[#0B5D4B]' : 'text-[#555555] hover:text-[#202522]'
+              currentPage === '/gallery' ? 'text-[#0B5D4B]' : 'text-[#555555] hover:text-[#202522]'
             }`}
           >
-            {currentPage === '/faq' && (
+            {currentPage === '/gallery' && (
               <span className="absolute -top-1 w-6 h-0.5 bg-[#C9A24D] rounded-full animate-fade-in" />
             )}
             <div
               className={`w-9 h-7 flex items-center justify-center rounded-full transition-all ${
-                currentPage === '/faq' ? 'bg-[#F5F3EE] text-[#0B5D4B]' : ''
+                currentPage === '/gallery' ? 'bg-[#F5F3EE] text-[#0B5D4B]' : ''
               }`}
             >
-              <HelpCircle className={`w-5 h-5 ${currentPage === '/faq' ? 'text-[#0B5D4B] stroke-[2.2]' : 'stroke-[1.8]'}`} />
+              <Camera className={`w-5 h-5 ${currentPage === '/gallery' ? 'text-[#0B5D4B] stroke-[2.2]' : 'stroke-[1.8]'}`} />
             </div>
             <span
               className={`text-[11px] font-medium tracking-tight mt-0.5 leading-tight ${
-                currentPage === '/faq' ? 'font-bold text-[#0B5D4B]' : 'text-[#555555]'
+                currentPage === '/gallery' ? 'font-bold text-[#0B5D4B]' : 'text-[#555555]'
               }`}
             >
-              FAQ
+              Gallery
             </span>
           </button>
 
