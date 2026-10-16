@@ -8,6 +8,8 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { MobileBottomNav } from './components/MobileBottomNav';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { FloatingApplyButton } from './components/FloatingApplyButton';
+import { ApplicationModal } from './components/ApplicationModal';
 import { MakkahLiveDrawer } from './components/MakkahLiveDrawer';
 import { EnquiryModal } from './components/EnquiryModal';
 import { HajjModal } from './components/HajjModal';
@@ -34,6 +36,14 @@ export default function App() {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [selectedPackageId, setSelectedPackageId] = useState<string>('premium');
   const [isHajjOpen, setIsHajjOpen] = useState(false);
+  const [isApplicationOpen, setIsApplicationOpen] = useState(false);
+
+  // Global listener for opening application form from anywhere
+  useEffect(() => {
+    const handleOpenAppForm = () => setIsApplicationOpen(true);
+    window.addEventListener('open-application-form', handleOpenAppForm);
+    return () => window.removeEventListener('open-application-form', handleOpenAppForm);
+  }, []);
 
   // Sync route on popstate (browser Back/Forward)
   useEffect(() => {
@@ -156,6 +166,9 @@ export default function App() {
         {/* Floating WhatsApp Action Button */}
         <FloatingWhatsApp />
 
+        {/* Floating Apply Now Application Form Button */}
+        <FloatingApplyButton onOpen={() => setIsApplicationOpen(true)} />
+
         {/* Floating Makkah Live Video Button & Slide-in Drawer */}
         <MakkahLiveDrawer onOpenPackages={() => navigateTo('/monthly-umrah')} />
 
@@ -173,6 +186,12 @@ export default function App() {
           isOpen={isEnquiryOpen}
           onClose={() => setIsEnquiryOpen(false)}
           defaultPackageId={selectedPackageId}
+        />
+
+        {/* Hajj & Umrah Application Modal (Reference PDF: HAJ APPLICATION MS WORLD (2).pdf) */}
+        <ApplicationModal
+          isOpen={isApplicationOpen}
+          onClose={() => setIsApplicationOpen(false)}
         />
 
         {/* Hajj Advisory Modal */}
