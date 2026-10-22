@@ -13,7 +13,9 @@ export type PageRoute =
   | '/about-us'
   | '/gallery'
   | '/faq'
-  | '/contact';
+  | '/contact'
+  | '/admin'
+  | '/admin/login';
 
 export interface RouteInfo {
   path: PageRoute;
@@ -28,6 +30,18 @@ export const ROUTES: Record<string, RouteInfo> = {
     label: 'Home',
     title: 'As-Safar | Premium Umrah & Hajj Travel Agency Trichy',
     metaDescription: 'Experience a comfortable, guided, and spiritually enriching Umrah and Hajj journey with As-Safar. Located in Cantonment, Trichy, Tamil Nadu. Call +91 95663 69654.',
+  },
+  admin: {
+    path: '/admin',
+    label: 'Admin Dashboard',
+    title: 'As-Safar Admin Dashboard | Management Portal',
+    metaDescription: 'As-Safar internal administration portal for announcement bar and Umrah package management.',
+  },
+  adminLogin: {
+    path: '/admin/login',
+    label: 'Admin Sign In',
+    title: 'As-Safar Admin Sign In | Management Portal',
+    metaDescription: 'Sign in to As-Safar administrator management portal.',
   },
   monthlyUmrah: {
     path: '/monthly-umrah',
@@ -112,6 +126,12 @@ export function normalizePathname(pathname: string): PageRoute {
   }
   if (cleaned === '/faq' || cleaned === '/faqs') {
     return '/faq';
+  }
+  if (cleaned === '/admin/login' || cleaned === '/admin/signin') {
+    return '/admin/login';
+  }
+  if (cleaned === '/admin' || cleaned.startsWith('/admin')) {
+    return '/admin';
   }
   if (cleaned === '/contact' || cleaned === '/contact-us') {
     return '/contact';

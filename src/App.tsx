@@ -27,6 +27,9 @@ import { AboutUsPage } from './pages/AboutUsPage';
 import { GalleryPage } from './pages/GalleryPage';
 import { FaqPage } from './pages/FaqPage';
 import { ContactPage } from './pages/ContactPage';
+import { AdminApp } from './admin/AdminApp';
+import { AdminLoginPage } from './admin/auth/AdminLoginPage';
+import { AdminAuthProvider } from './admin/auth/AdminAuthContext';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageRoute>(() => {
@@ -82,6 +85,23 @@ export default function App() {
     setSelectedPackageId(pkg.id);
     setIsEnquiryOpen(true);
   };
+
+  // Dedicated Admin Routes - Completely independent layout (No public header/footer)
+  if (currentPage === '/admin/login') {
+    return (
+      <AdminAuthProvider>
+        <AdminLoginPage onNavigate={navigateTo} />
+      </AdminAuthProvider>
+    );
+  }
+
+  if (currentPage === '/admin') {
+    return (
+      <AdminAuthProvider>
+        <AdminApp onNavigate={navigateTo} />
+      </AdminAuthProvider>
+    );
+  }
 
   return (
     <LanguageProvider>
