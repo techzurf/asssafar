@@ -87,18 +87,14 @@ export default function App() {
   };
 
   // Dedicated Admin Routes - Completely independent layout (No public header/footer)
-  if (currentPage === '/admin/login') {
+  if (currentPage === '/admin' || currentPage === '/admin/login') {
     return (
       <AdminAuthProvider>
-        <AdminLoginPage onNavigate={navigateTo} />
-      </AdminAuthProvider>
-    );
-  }
-
-  if (currentPage === '/admin') {
-    return (
-      <AdminAuthProvider>
-        <AdminApp onNavigate={navigateTo} />
+        {currentPage === '/admin/login' ? (
+          <AdminLoginPage onNavigate={navigateTo} />
+        ) : (
+          <AdminApp onNavigate={navigateTo} />
+        )}
       </AdminAuthProvider>
     );
   }

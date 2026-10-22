@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { Session, User, AuthError } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
 import { supabase, getSupabaseConfigStatus, SupabaseConfigStatus } from './supabaseClient';
+
+export interface AuthorizationDetails {
+  isAuthorized: boolean;
+  hasServerRole: boolean;
+  isEmailAllowed: boolean;
+  reason?: string;
+}
 
 export interface AdminAuthContextType {
   session: Session | null;
@@ -9,6 +16,7 @@ export interface AdminAuthContextType {
   isConfigured: boolean;
   configStatus: SupabaseConfigStatus;
   isAuthorized: boolean;
+  authDetails: AuthorizationDetails;
   authError: string | null;
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signOut: () => Promise<void>;
@@ -19,35 +27,73 @@ const AdminAuthContext = createContext<AdminAuthContextType | undefined>(undefin
 
 /**
  * Validates whether the authenticated user holds genuine administrator privileges.
- * Security standards enforced:
- * 1. Checks Supabase app_metadata (raw_app_meta_data) which is server-authoritative and CANNOT be forged or edited by clients.
- * 2. Checks against explicitly configured environment administrator identities (VITE_ADMIN_EMAILS).
- * 3. Client-writable `user_metadata` is STRICTLY IGNORED to prevent client-side privilege escalation.
+ * 
+ * Strict Security Audit Enforcements:
+ * 1. Trusted Authorization Mechanism: Requires server-authoritative app_metadata (cryptographically signed in Supabase JWT).
+ *    Client-writable user_metadata (raw_user_meta_data) is STRICTLY REJECTED to prevent client-side privilege escalation.
+ * 2. Allowlist Defense-in-Depth: If VITE_ADMIN_EMAILS is configured, the user's email must also be present in this list.
+ * 3. Frontend-Only Variable Prohibition: VITE_ADMIN_EMAILS alone is NEVER sufficient to grant admin privileges.
  */
-export const verifyAdminAuthorization = (user: User | null): boolean => {
-  if (!user) return false;
-
-  // 1. Server-protected app_metadata (set only via Supabase Dashboard, Service Role API, or DB trigger)
-  const appRole = user.app_metadata?.role;
-  const isClaimsAdmin = user.app_metadata?.claims_admin === true || user.app_metadata?.is_admin === true;
-  if (appRole === 'admin' || isClaimsAdmin) {
-    return true;
+export const checkAdminAuthorizationDetails = (user: User | null): AuthorizationDetails => {
+  if (!user) {
+    return {
+      isAuthorized: false,
+      hasServerRole: false,
+      isEmailAllowed: false,
+      reason: 'No authenticated user session.',
+    };
   }
 
-  // 2. Explicitly configured administrator emails from environment variables
-  const envAdminEmailsRaw = (import.meta.env.VITE_ADMIN_EMAILS || '').trim();
+  // 1. Inspect server-authoritative app_metadata (signed in Supabase JWT, read-only for clients)
+  const appMetadata = user.app_metadata || {};
+  const appRole = appMetadata.role || appMetadata.user_role;
+  const isClaimsAdmin = appMetadata.claims_admin === true || appMetadata.is_admin === true;
+  const hasServerRole = appRole === 'admin' || isClaimsAdmin;
+
+  // 2. Inspect configured administrator email allowlist (defense-in-depth)
+  const envAdminEmailsRaw = (
+    (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_ADMIN_EMAILS : '') ||
+    (typeof process !== 'undefined' ? process.env.VITE_ADMIN_EMAILS : '') ||
+    ''
+  ).trim();
+  let isEmailAllowed = true;
   if (envAdminEmailsRaw && user.email) {
     const configuredAdmins = envAdminEmailsRaw
       .split(',')
       .map((e: string) => e.trim().toLowerCase())
       .filter(Boolean);
-    if (configuredAdmins.includes(user.email.toLowerCase())) {
-      return true;
-    }
+    isEmailAllowed = configuredAdmins.includes(user.email.toLowerCase());
   }
 
-  // Fallback: unauthorized regular user
-  return false;
+  // Trusted server check: User MUST have the server-signed admin claim
+  if (!hasServerRole) {
+    return {
+      isAuthorized: false,
+      hasServerRole: false,
+      isEmailAllowed,
+      reason: 'Your account is authenticated with Supabase, but is missing the server-side "role": "admin" in app_metadata.',
+    };
+  }
+
+  // Allowlist check: If allowlist is active, email must match
+  if (!isEmailAllowed) {
+    return {
+      isAuthorized: false,
+      hasServerRole: true,
+      isEmailAllowed: false,
+      reason: 'Your account email is not in the configured administrator allowlist (VITE_ADMIN_EMAILS).',
+    };
+  }
+
+  return {
+    isAuthorized: true,
+    hasServerRole: true,
+    isEmailAllowed: true,
+  };
+};
+
+export const verifyAdminAuthorization = (user: User | null): boolean => {
+  return checkAdminAuthorizationDetails(user).isAuthorized;
 };
 
 export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -55,7 +101,11 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [authDetails, setAuthDetails] = useState<AuthorizationDetails>({
+    isAuthorized: false,
+    hasServerRole: false,
+    isEmailAllowed: false,
+  });
   const [authError, setAuthError] = useState<string | null>(null);
 
   // Initialize and restore session from storage
@@ -76,14 +126,19 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
             setAuthError(error.message);
             setSession(null);
             setUser(null);
-            setIsAuthorized(false);
+            setAuthDetails({
+              isAuthorized: false,
+              hasServerRole: false,
+              isEmailAllowed: false,
+              reason: error.message,
+            });
           }
         } else if (data.session) {
           if (isMounted) {
             setSession(data.session);
             setUser(data.session.user);
-            const authorized = verifyAdminAuthorization(data.session.user);
-            setIsAuthorized(authorized);
+            const details = checkAdminAuthorizationDetails(data.session.user);
+            setAuthDetails(details);
           }
         }
       } catch (err) {
@@ -97,7 +152,7 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     initAuth();
 
-    // Subscribe to ongoing auth state changes (sign in, sign out, token refresh)
+    // Subscribe to ongoing auth state changes (sign in, sign out, token refresh, user updated)
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         if (!isMounted) return;
@@ -106,10 +161,14 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
         setUser(currentSession?.user ?? null);
 
         if (currentSession?.user) {
-          const authorized = verifyAdminAuthorization(currentSession.user);
-          setIsAuthorized(authorized);
+          const details = checkAdminAuthorizationDetails(currentSession.user);
+          setAuthDetails(details);
         } else {
-          setIsAuthorized(false);
+          setAuthDetails({
+            isAuthorized: false,
+            hasServerRole: false,
+            isEmailAllowed: false,
+          });
         }
 
         if (event === 'SIGNED_OUT') {
@@ -164,20 +223,22 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
           return { success: false, error: errMsg };
         }
 
-        // Verify admin authorization
-        const authorized = verifyAdminAuthorization(data.user);
-        if (!authorized) {
-          // If authenticated but not authorized, sign out immediately to prevent unauthorized session
-          await supabase.auth.signOut();
-          const errMsg = 'Access Denied: Your account does not have administrator privileges. Please contact the As-Safar system administrator.';
-          setAuthError(errMsg);
-          setIsAuthorized(false);
-          return { success: false, error: errMsg };
+        // Verify trusted admin authorization
+        const details = checkAdminAuthorizationDetails(data.user);
+        setAuthDetails(details);
+
+        if (!details.isAuthorized) {
+          // If authenticated but not authorized, keep user informed on unauthorized view
+          setSession(data.session);
+          setUser(data.user);
+          return { 
+            success: false, 
+            error: details.reason || 'Access Denied: Administrator role is required in Supabase app_metadata.' 
+          };
         }
 
         setSession(data.session);
         setUser(data.user);
-        setIsAuthorized(true);
         return { success: true };
       } catch (err: any) {
         const errMsg = err?.message || 'An unexpected error occurred during authentication.';
@@ -202,7 +263,11 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
     } finally {
       setSession(null);
       setUser(null);
-      setIsAuthorized(false);
+      setAuthDetails({
+        isAuthorized: false,
+        hasServerRole: false,
+        isEmailAllowed: false,
+      });
       setIsLoading(false);
     }
   }, []);
@@ -215,7 +280,8 @@ export const AdminAuthProvider: React.FC<{ children: ReactNode }> = ({ children 
         isLoading,
         isConfigured: configStatus.isConfigured,
         configStatus,
-        isAuthorized,
+        isAuthorized: authDetails.isAuthorized,
+        authDetails,
         authError,
         signIn,
         signOut,

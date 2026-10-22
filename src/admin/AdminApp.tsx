@@ -25,9 +25,25 @@ interface AdminAppProps {
 export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
   const { session, user, isLoading, isAuthorized, signOut } = useAdminAuth();
 
-  // Navigation Tab State
-  const [currentTab, setCurrentTab] = useState<AdminTab>('dashboard');
+  // Navigation Tab State initialized from URL subpath
+  const [currentTab, setCurrentTab] = useState<AdminTab>(() => {
+    const path = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
+    if (path.includes('announcement')) return 'announcement';
+    if (path.includes('package')) return 'packages';
+    return 'dashboard';
+  });
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  // Sync tab navigation with browser history
+  const handleSelectTab = useCallback((tab: AdminTab) => {
+    setCurrentTab(tab);
+    if (typeof window !== 'undefined') {
+      const targetPath = tab === 'dashboard' ? '/admin' : `/admin/${tab}`;
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({}, '', targetPath);
+      }
+    }
+  }, []);
 
   // Announcement State (In-Memory Mock Session)
   const [announcementState, setAnnouncementState] = useState<AnnouncementConfigState>(INITIAL_ANNOUNCEMENT_STATE);
@@ -208,7 +224,7 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
       {/* Sidebar Navigation */}
       <AdminSidebar
         currentTab={currentTab}
-        onSelectTab={setCurrentTab}
+        onSelectTab={handleSelectTab}
         isOpenMobile={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
         onLogout={handleLogout}
@@ -232,9 +248,9 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
               announcement={announcementState}
               packages={packagesState}
               activities={activityLogs}
-              onNavigateTab={setCurrentTab}
+              onNavigateTab={handleSelectTab}
               onOpenAddPackage={() => {
-                setCurrentTab('packages');
+                handleSelectTab('packages');
                 setTriggerAddPackageModal(true);
               }}
             />

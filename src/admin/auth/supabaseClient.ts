@@ -6,9 +6,18 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
  * Statically references import.meta.env.VITE_* so Vite build/dev AST replacement works cleanly.
  */
 
-// Direct static property access for Vite build and dev replacement
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim();
-const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim();
+// Direct static property access for Vite build and dev replacement, with Node/test fallback
+const supabaseUrl = (
+  (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_SUPABASE_URL : '') ||
+  (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_URL : '') ||
+  ''
+).trim();
+
+const supabaseAnonKey = (
+  (typeof import.meta !== 'undefined' && import.meta.env ? import.meta.env.VITE_SUPABASE_ANON_KEY : '') ||
+  (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_ANON_KEY : '') ||
+  ''
+).trim();
 
 export interface SupabaseConfigStatus {
   isConfigured: boolean;
