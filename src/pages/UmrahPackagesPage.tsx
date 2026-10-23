@@ -22,6 +22,7 @@ import { UMRAH_PACKAGES } from '../data/packages';
 import { BRAND_INFO } from '../data/content';
 import { PackageItem } from '../types';
 import { PageRoute } from '../routes';
+import { fetchPublicActivePackages, PACKAGES_UPDATED_EVENT } from '../services/packageService';
 
 interface UmrahPackagesPageProps {
   onSelectPackage: (pkg: PackageItem) => void;
@@ -34,10 +35,35 @@ export const UmrahPackagesPage: React.FC<UmrahPackagesPageProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'economy' | 'standard' | 'premium'>('all');
   const [expandedInclusions, setExpandedInclusions] = useState<string | null>('premium');
+  const [packages, setPackages] = useState<PackageItem[]>(UMRAH_PACKAGES);
+
+  // Fetch active packages from Supabase on mount and listen to updates
+  React.useEffect(() => {
+    let isMounted = true;
+    fetchPublicActivePackages().then((res) => {
+      if (isMounted && res.data && res.data.length > 0) {
+        setPackages(res.data);
+      }
+    });
+
+    const handleUpdate = () => {
+      fetchPublicActivePackages().then((res) => {
+        if (isMounted && res.data && res.data.length > 0) {
+          setPackages(res.data);
+        }
+      });
+    };
+
+    window.addEventListener(PACKAGES_UPDATED_EVENT, handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener(PACKAGES_UPDATED_EVENT, handleUpdate);
+    };
+  }, []);
 
   const filteredPackages = selectedCategory === 'all'
-    ? UMRAH_PACKAGES
-    : UMRAH_PACKAGES.filter((p) => p.category === selectedCategory);
+    ? packages
+    : packages.filter((p) => p.category === selectedCategory);
 
   const packageImages: Record<string, { url: string; alt: string }> = {
     economy: {

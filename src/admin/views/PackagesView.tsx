@@ -17,7 +17,10 @@ import {
   Table as TableIcon,
   X,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Database,
+  RefreshCw,
+  Loader2
 } from 'lucide-react';
 import { AdminPackageItem, PackageCategory, PackageStatus } from '../types/adminTypes';
 import { PackageEditModal } from './PackageEditModal';
@@ -26,13 +29,17 @@ import { ConfirmModal } from '../components/ConfirmModal';
 
 interface PackagesViewProps {
   packages: AdminPackageItem[];
-  onAddPackage: (pkg: AdminPackageItem) => void;
-  onUpdatePackage: (pkg: AdminPackageItem) => void;
-  onDeletePackage: (id: string) => void;
-  onToggleStatus: (id: string) => void;
+  onAddPackage: (pkg: AdminPackageItem) => Promise<boolean> | void;
+  onUpdatePackage: (pkg: AdminPackageItem) => Promise<boolean> | void;
+  onDeletePackage: (id: string) => Promise<boolean> | void;
+  onToggleStatus: (id: string) => Promise<boolean> | void;
   onShowToast: (title: string, message: string, type?: 'success' | 'info' | 'warning') => void;
   isAddModalOpenInitially?: boolean;
   onCloseAddModalInitially?: () => void;
+  isLoading?: boolean;
+  isTableMissing?: boolean;
+  isDbConnected?: boolean;
+  onRefresh?: () => void;
 }
 
 export const PackagesView: React.FC<PackagesViewProps> = ({
@@ -44,6 +51,10 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
   onShowToast,
   isAddModalOpenInitially = false,
   onCloseAddModalInitially,
+  isLoading = false,
+  isTableMissing = false,
+  isDbConnected = false,
+  onRefresh,
 }) => {
   // Search and Filter State
   const [searchTerm, setSearchTerm] = useState('');
@@ -54,6 +65,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
   // Modals state
   const [isEditModalOpen, setIsEditModalOpen] = useState(isAddModalOpenInitially);
   const [editingPackage, setEditingPackage] = useState<AdminPackageItem | null>(null);
+  const [isModalSaving, setIsModalSaving] = useState(false);
 
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const [previewingPackage, setPreviewingPackage] = useState<AdminPackageItem | null>(null);
@@ -104,17 +116,20 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
     setIsPreviewModalOpen(true);
   };
 
-  const handleSaveModal = (pkg: AdminPackageItem) => {
-    if (editingPackage) {
-      onUpdatePackage(pkg);
-      onShowToast('Package Updated', `"${pkg.name}" has been modified in local session.`, 'success');
-    } else {
-      onAddPackage(pkg);
-      onShowToast('Package Created', `New package "${pkg.name}" added to list.`, 'success');
+  const handleSaveModal = async (pkg: AdminPackageItem) => {
+    setIsModalSaving(true);
+    try {
+      if (editingPackage) {
+        await onUpdatePackage(pkg);
+      } else {
+        await onAddPackage(pkg);
+      }
+      setIsEditModalOpen(false);
+      setEditingPackage(null);
+      if (onCloseAddModalInitially) onCloseAddModalInitially();
+    } finally {
+      setIsModalSaving(false);
     }
-    setIsEditModalOpen(false);
-    setEditingPackage(null);
-    if (onCloseAddModalInitially) onCloseAddModalInitially();
   };
 
   const handleToggleStatusClick = (pkg: AdminPackageItem) => {
@@ -160,8 +175,81 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
     setStatusFilter('all');
   };
 
+  if (isLoading && packages.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs space-y-3">
+        <Loader2 className="w-8 h-8 text-[#2563EB] animate-spin mx-auto" />
+        <h3 className="text-sm font-bold text-slate-800">Fetching Umrah Packages</h3>
+        <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          Loading package inventory from Supabase database table...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
+      {/* Database Status Callouts */}
+      {isTableMissing && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+          <Database className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="text-xs text-amber-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-bold">Database Migration Required: Table &apos;umrah_packages&apos;</p>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-800">
+                Action Needed
+              </span>
+            </div>
+            <p className="text-amber-800 mt-1">
+              The Supabase database has not had the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-semibold">umrah_packages</code> table created yet.
+              Please execute the provided SQL migration in your <strong>Supabase Dashboard &gt; SQL Editor</strong> to enable package persistence and RLS security.
+            </p>
+            {onRefresh && (
+              <div className="mt-2.5 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onRefresh}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors cursor-pointer"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  <span>Re-check Database</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {isDbConnected && !isTableMissing && (
+        <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 flex items-start gap-3">
+          <Database className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
+          <div className="text-xs text-blue-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-bold flex items-center gap-1.5">
+                <span>Supabase Live Umrah Packages Integration</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  RLS Protected
+                </span>
+              </p>
+              {onRefresh && (
+                <button
+                  type="button"
+                  onClick={onRefresh}
+                  title="Refresh packages from Supabase"
+                  className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100/60 transition-colors cursor-pointer"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+            <p className="text-blue-800/90 mt-0.5">
+              Packages created, edited, or toggled here persist in the Supabase <code className="bg-blue-100/80 px-1 py-0.5 rounded font-mono font-bold">umrah_packages</code> table. Active packages automatically appear on the public website.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Top Controls Bar */}
       <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -587,6 +675,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
       <PackageEditModal
         isOpen={isEditModalOpen}
         packageToEdit={editingPackage}
+        isSaving={isModalSaving}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingPackage(null);

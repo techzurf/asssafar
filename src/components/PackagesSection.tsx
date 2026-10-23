@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Clock, ArrowRight, MapPin, Sparkles, Building2, Bed, Bus, Utensils } from 'lucide-react';
 import { UMRAH_PACKAGES } from '../data/packages';
 import { PackageItem } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { fetchPublicActivePackages, PACKAGES_UPDATED_EVENT } from '../services/packageService';
 
 interface PackagesSectionProps {
   onSelectPackage: (pkg: PackageItem) => void;
@@ -10,138 +11,103 @@ interface PackagesSectionProps {
 
 export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectPackage }) => {
   const { t } = useLanguage();
-  const economyPkg = UMRAH_PACKAGES.find((p) => p.id === 'economy') || UMRAH_PACKAGES[0];
-  const standardPkg = UMRAH_PACKAGES.find((p) => p.id === 'standard') || UMRAH_PACKAGES[1];
-  const premiumPkg = UMRAH_PACKAGES.find((p) => p.id === 'premium') || UMRAH_PACKAGES[2];
+  const [packages, setPackages] = useState<PackageItem[]>(UMRAH_PACKAGES);
 
-  const packageCards = [
-    {
-      pkg: economyPkg,
+  // Fetch active packages from Supabase on mount and listen to updates
+  useEffect(() => {
+    let isMounted = true;
+    fetchPublicActivePackages().then((res) => {
+      if (isMounted && res.data && res.data.length > 0) {
+        setPackages(res.data);
+      }
+    });
+
+    const handleUpdate = () => {
+      fetchPublicActivePackages().then((res) => {
+        if (isMounted && res.data && res.data.length > 0) {
+          setPackages(res.data);
+        }
+      });
+    };
+
+    window.addEventListener(PACKAGES_UPDATED_EVENT, handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener(PACKAGES_UPDATED_EVENT, handleUpdate);
+    };
+  }, []);
+
+  const defaultCategoryImages: Record<string, { image: string; alt: string }> = {
+    economy: {
       image: 'https://res.cloudinary.com/ddeivqykl/image/upload/v1791961028/Gemini_Generated_Image_satx8zsatx8zsatx_l0jfm3.png',
-      imageAlt: 'Economy Umrah package pilgrimage view',
-      badge: 'ECONOMY',
-      badgeClass: 'bg-white/95 text-[#073E32] shadow-sm',
-      title: 'Economy Umrah',
-      description: 'An affordable and comfortable pilgrimage with essential travel assistance.',
-      highlight: '14 Days',
-      supportingLabel: 'Makkah & Madinah',
-      isPopular: false,
-      facilities: [
-        {
-          icon: Building2,
-          label: 'Makkah Stay',
-          detail: '3★ Hotel (550m to Haram)',
-          iconColor: 'text-[#2563EB]',
-          bgColor: 'bg-[#EFF6FF]',
-        },
-        {
-          icon: Bed,
-          label: 'Madina Stay',
-          detail: '3★ Hotel (350m to Gates)',
-          iconColor: 'text-[#7C3AED]',
-          bgColor: 'bg-[#F5F3FF]',
-        },
-        {
-          icon: Bus,
-          label: 'Ground Transport',
-          detail: 'AC Luxury Group Bus',
-          iconColor: 'text-[#EA580C]',
-          bgColor: 'bg-[#FFF7ED]',
-        },
-        {
-          icon: Utensils,
-          label: 'Meals & Dining',
-          detail: 'Daily South Indian Meals',
-          iconColor: 'text-[#E11D48]',
-          bgColor: 'bg-[#FFF1F2]',
-        },
-      ],
+      alt: 'Economy Umrah package pilgrimage view',
     },
-    {
-      pkg: standardPkg,
+    standard: {
       image: 'https://res.cloudinary.com/ddeivqykl/image/upload/v1791961421/Gemini_Generated_Image_immrh3immrh3immr_mrhvc2.png',
-      imageAlt: 'Standard Umrah package pilgrimage view',
-      badge: 'POPULAR',
-      badgeClass: 'bg-[#C9A24D] text-[#073E32] shadow-md font-extrabold',
-      title: 'Standard Umrah',
-      description: 'Enjoy convenient hotel stays, guided support, and a carefully planned Umrah experience.',
-      highlight: '15 Days',
-      supportingLabel: 'Makkah & Madinah',
-      isPopular: true,
-      facilities: [
-        {
-          icon: Building2,
-          label: 'Makkah Stay',
-          detail: '4★ Hotel (Within 300m)',
-          iconColor: 'text-[#2563EB]',
-          bgColor: 'bg-[#EFF6FF]',
-        },
-        {
-          icon: Bed,
-          label: 'Madina Stay',
-          detail: '4★ Hotel (~200m to Gates)',
-          iconColor: 'text-[#7C3AED]',
-          bgColor: 'bg-[#F5F3FF]',
-        },
-        {
-          icon: Bus,
-          label: 'Ground Transport',
-          detail: 'Executive AC Coach',
-          iconColor: 'text-[#EA580C]',
-          bgColor: 'bg-[#FFF7ED]',
-        },
-        {
-          icon: Utensils,
-          label: 'Meals & Dining',
-          detail: 'Full-Board Buffet',
-          iconColor: 'text-[#E11D48]',
-          bgColor: 'bg-[#FFF1F2]',
-        },
-      ],
+      alt: 'Standard Umrah package pilgrimage view',
     },
-    {
-      pkg: premiumPkg,
+    premium: {
       image: 'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1200&q=80',
-      imageAlt: 'The Holy Kaaba at Masjid al-Haram at golden hour',
-      badge: 'PREMIUM',
-      badgeClass: 'bg-[#0B5D4B] text-white border border-[#C9A24D]/50 shadow-sm',
-      title: 'Premium Umrah Experience',
-      description: 'Experience an elevated pilgrimage with premium accommodation and personalized assistance.',
-      highlight: '15 Days',
-      supportingLabel: 'Premium Travel Experience',
-      isPopular: false,
+      alt: 'The Holy Kaaba at Masjid al-Haram at golden hour',
+    },
+  };
+
+  const packageCards = packages.map((pkg) => {
+    const isPopular = pkg.featured || pkg.category === 'standard';
+    const catImages = defaultCategoryImages[pkg.category] || defaultCategoryImages.standard;
+
+    let badgeClass = 'bg-white/95 text-[#073E32] shadow-sm';
+    if (isPopular) {
+      badgeClass = 'bg-[#C9A24D] text-[#073E32] shadow-md font-extrabold';
+    } else if (pkg.category === 'premium') {
+      badgeClass = 'bg-[#0B5D4B] text-white border border-[#C9A24D]/50 shadow-sm';
+    }
+
+    const badgeLabel = pkg.badge || (pkg.category === 'economy' ? 'ECONOMY' : pkg.category === 'standard' ? 'POPULAR' : 'PREMIUM');
+
+    return {
+      pkg,
+      image: catImages.image,
+      imageAlt: `${pkg.name} pilgrimage view`,
+      badge: badgeLabel,
+      badgeClass,
+      title: pkg.name,
+      description: pkg.tagline || pkg.idealFor,
+      highlight: pkg.duration.split('(')[0].trim() || pkg.duration,
+      supportingLabel: 'Makkah & Madinah',
+      isPopular,
       facilities: [
         {
           icon: Building2,
           label: 'Makkah Stay',
-          detail: '5★ Clock Tower (Direct Access)',
+          detail: pkg.makkahHotel,
           iconColor: 'text-[#2563EB]',
           bgColor: 'bg-[#EFF6FF]',
         },
         {
           icon: Bed,
           label: 'Madina Stay',
-          detail: '5★ Front Row (<100m)',
+          detail: pkg.madinahHotel,
           iconColor: 'text-[#7C3AED]',
           bgColor: 'bg-[#F5F3FF]',
         },
         {
           icon: Bus,
           label: 'Ground Transport',
-          detail: 'Bullet Train & VIP Coach',
+          detail: pkg.transport,
           iconColor: 'text-[#EA580C]',
           bgColor: 'bg-[#FFF7ED]',
         },
         {
           icon: Utensils,
           label: 'Meals & Dining',
-          detail: '5★ Gourmet Buffet',
+          detail: pkg.food,
           iconColor: 'text-[#E11D48]',
           bgColor: 'bg-[#FFF1F2]',
         },
       ],
-    },
-  ];
+    };
+  });
 
   return (
     <section id="packages" className="py-12 sm:py-24 bg-[#FFFFFF]">

@@ -9,7 +9,8 @@ import {
   Utensils, 
   Clock, 
   IndianRupee, 
-  Image as ImageIcon 
+  Image as ImageIcon,
+  Loader2 
 } from 'lucide-react';
 import { AdminPackageItem, PackageCategory, PackageStatus } from '../types/adminTypes';
 
@@ -18,6 +19,7 @@ interface PackageEditModalProps {
   packageToEdit: AdminPackageItem | null; // null means Add Package
   onClose: () => void;
   onSave: (pkg: AdminPackageItem) => void;
+  isSaving?: boolean;
 }
 
 interface PackageErrors {
@@ -36,6 +38,7 @@ export const PackageEditModal: React.FC<PackageEditModalProps> = ({
   packageToEdit,
   onClose,
   onSave,
+  isSaving = false,
 }) => {
   const isEditing = !!packageToEdit;
 
@@ -90,7 +93,7 @@ export const PackageEditModal: React.FC<PackageEditModalProps> = ({
 
     onSave({
       ...formData,
-      updatedAt: 'Just now (Mock Session)',
+      updatedAt: 'Just now',
     });
   };
 
@@ -354,16 +357,27 @@ export const PackageEditModal: React.FC<PackageEditModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              disabled={isSaving}
+              className="px-4 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+              disabled={isSaving}
+              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer disabled:opacity-50"
             >
-              <Save className="w-3.5 h-3.5" />
-              <span>{isEditing ? 'Save Package' : 'Create Package'}</span>
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Saving...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{isEditing ? 'Save Package' : 'Create Package'}</span>
+                </>
+              )}
             </button>
           </div>
         </form>

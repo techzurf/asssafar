@@ -52,15 +52,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </p>
         </div>
 
-        {/* Prototype Notice Capsule */}
+        {/* Status Notice Capsule */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
           <div className="px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-800">
             <div className="flex items-center gap-1.5 font-bold">
               <Database className="w-3.5 h-3.5 text-blue-600" />
-              <span>Phase 1 UI Demonstration</span>
+              <span>Announcement & Packages: Live Supabase Backend</span>
             </div>
             <p className="text-[11px] text-blue-700/90 mt-0.5">
-              Local session data · Supabase integration in Phase 2
+              Public website and admin operations synced with database
             </p>
           </div>
         </div>
@@ -168,7 +168,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           <p className="text-xs text-slate-500 mt-2">
-            Mock update time for local session demonstration
+            Synchronized with Supabase announcement settings
           </p>
 
           <div className="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Megaphone, 
   Save, 
@@ -8,11 +8,22 @@ import {
   Clock, 
   AlertCircle, 
   Check, 
-  Eye,
-  Info,
-  Sparkles
+  Eye, 
+  Info, 
+  Loader2, 
+  Database,
+  CheckCircle2,
+  RefreshCw,
+  AlertTriangle
 } from 'lucide-react';
 import { AnnouncementConfigState } from '../types/adminTypes';
+import { useAdminAuth } from '../auth/AdminAuthContext';
+import { 
+  fetchAnnouncementSettings, 
+  saveAnnouncementSettings,
+  ANNOUNCEMENT_SETTINGS_TABLE,
+  ANNOUNCEMENT_SETTINGS_ID 
+} from '../../services/announcementService';
 
 interface AnnouncementViewProps {
   initialConfig: AnnouncementConfigState;
@@ -33,10 +44,58 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
   onSave,
   onShowToast,
 }) => {
+  const { user } = useAdminAuth();
+
+  // The last persisted configuration from Supabase
+  const [savedConfig, setSavedConfig] = useState<AnnouncementConfigState>({ ...initialConfig });
+
   // Local form state for draft edits
   const [formData, setFormData] = useState<AnnouncementConfigState>({ ...initialConfig });
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
+  // Async States
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [isTableMissing, setIsTableMissing] = useState<boolean>(false);
+  const [isRowMissing, setIsRowMissing] = useState<boolean>(false);
+  const [isDbConnected, setIsDbConnected] = useState<boolean>(false);
+
+  // Load saved settings from Supabase on mount or retry
+  const loadSavedSettings = useCallback(async () => {
+    setIsLoading(true);
+    setFetchError(null);
+    try {
+      const result = await fetchAnnouncementSettings();
+      
+      setIsTableMissing(Boolean(result.isTableMissing));
+      setIsRowMissing(Boolean(result.isRowMissing));
+      setIsDbConnected(Boolean(result.isFromDatabase));
+
+      if (result.error && !result.isTableMissing && !result.isRowMissing) {
+        setFetchError(result.error);
+      } else {
+        setFetchError(null);
+      }
+
+      setSavedConfig(result.data);
+      setFormData(result.data);
+      setHasUnsavedChanges(false);
+      // NOTE: Do not invoke onSave here! Calling parent state update during initial load
+      // creates re-render cascades. onSave is strictly invoked upon successful manual save.
+    } catch (err: any) {
+      console.error('Failed to load announcement settings:', err);
+      setFetchError(err?.message || 'An unexpected error occurred while loading settings.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Run on mount
+  useEffect(() => {
+    loadSavedSettings();
+  }, [loadSavedSettings]);
 
   // Validate form fields
   const validateForm = (): boolean => {
@@ -66,7 +125,7 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-      ...(field === 'contactNumber' ? { contactTel: value.replace(/\s+/g, '') } : {}),
+      ...(field === 'contactNumber' ? { contactTel: value.replace(/[^\d+]/g, '') } : {}),
     }));
     setHasUnsavedChanges(true);
 
@@ -81,46 +140,172 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
     handleChange('isActive', nextState);
   };
 
+  // Reset button restores the LAST SAVED settings without modifying database content
   const handleReset = () => {
-    setFormData({ ...initialConfig });
+    setFormData({ ...savedConfig });
     setErrors({});
     setHasUnsavedChanges(false);
-    onShowToast('Draft Reset', 'Announcement fields restored to previously saved values.', 'info');
+    onShowToast('Draft Reset', 'Form restored to previously saved database configuration.', 'info');
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  // Save changes to Supabase
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
       onShowToast('Validation Failed', 'Please fix the highlighted required fields.', 'warning');
       return;
     }
 
-    const updatedConfig: AnnouncementConfigState = {
-      ...formData,
-      lastUpdated: 'Just now (Mock Session)',
-    };
+    setIsSaving(true);
+    try {
+      const result = await saveAnnouncementSettings(formData, user?.email);
 
-    onSave(updatedConfig);
-    setHasUnsavedChanges(false);
-    onShowToast(
-      'Changes Saved (Phase 1)',
-      'The announcement bar configuration and live preview have been updated for this session.',
-      'success'
-    );
+      if (result.success && result.data) {
+        setSavedConfig(result.data);
+        setFormData(result.data);
+        setHasUnsavedChanges(false);
+        setIsDbConnected(true);
+        setIsRowMissing(false);
+        setIsTableMissing(false);
+        setFetchError(null);
+        onSave(result.data);
+        onShowToast(
+          'Changes Saved',
+          'Announcement bar settings successfully updated in Supabase and live on the public website.',
+          'success'
+        );
+      } else {
+        if (result.isTableMissing) {
+          setIsTableMissing(true);
+        }
+        onShowToast(
+          'Failed to Save',
+          result.error || 'Could not save to Supabase. Check database permissions.',
+          'warning'
+        );
+      }
+    } catch (err: any) {
+      onShowToast('Error', err?.message || 'An error occurred while saving.', 'warning');
+    } finally {
+      setIsSaving(false);
+    }
   };
+
+  // Loading Screen: shown ONLY during initial fetch
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs space-y-3">
+        <Loader2 className="w-8 h-8 text-[#2563EB] animate-spin mx-auto" />
+        <h3 className="text-sm font-bold text-slate-800">Fetching Announcement Settings</h3>
+        <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          Connecting to Supabase table <code className="bg-slate-100 px-1 py-0.5 rounded font-mono text-[11px]">{ANNOUNCEMENT_SETTINGS_TABLE}</code>...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {/* Informational Callout */}
-      <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 flex items-start gap-3">
-        <Info className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
-        <div className="text-xs text-blue-900 leading-relaxed">
-          <p className="font-bold">Phase 1 Mock Announcement Editor</p>
-          <p className="text-blue-800/90 mt-0.5">
-            Editing fields updates the admin live preview and local session state. In Phase 2, this will persist to a Supabase <code className="bg-blue-100/80 px-1 py-0.5 rounded font-mono">announcements</code> table with role-based security.
-          </p>
+      {/* 1. Network / Query Error Callout with Retry */}
+      {fetchError && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-4 flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div className="text-xs text-red-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between gap-2">
+              <p className="font-bold">Database Connection Notice</p>
+              <button
+                type="button"
+                onClick={loadSavedSettings}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-white border border-red-300 text-red-800 hover:bg-red-100 transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Retry</span>
+              </button>
+            </div>
+            <p className="text-red-700 mt-1">{fetchError}</p>
+            <p className="text-red-600/80 mt-1">
+              Safe default values are loaded below so you can still review and edit. Click <strong>Retry</strong> once connectivity is restored.
+            </p>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* 2. Table Missing Callout */}
+      {isTableMissing && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+          <Database className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="text-xs text-amber-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-bold">Database Migration Required: Table &apos;{ANNOUNCEMENT_SETTINGS_TABLE}&apos;</p>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-800">
+                Action Needed
+              </span>
+            </div>
+            <p className="text-amber-800 mt-1">
+              The Supabase database has not had the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-semibold">{ANNOUNCEMENT_SETTINGS_TABLE}</code> table created yet.
+              Please run the provided SQL migration in your <strong>Supabase Dashboard &gt; SQL Editor</strong> to enable database persistence.
+            </p>
+            <div className="mt-2.5 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={loadSavedSettings}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Re-check Database</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3. Row Missing Callout (Table exists, but 'current' row has not yet been initialized) */}
+      {isRowMissing && !isTableMissing && !fetchError && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="text-xs text-amber-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-bold">Unsaved Default Settings Loaded</p>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-800">
+                Not Saved in Database
+              </span>
+            </div>
+            <p className="text-amber-800 mt-1">
+              The table exists, but no record with <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-semibold">id = &apos;{ANNOUNCEMENT_SETTINGS_ID}&apos;</code> was found. Default values are loaded below.
+              Click <strong>Save Changes</strong> to initialize and save this announcement configuration to Supabase.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* 4. Connected State Callout */}
+      {isDbConnected && !fetchError && !isTableMissing && !isRowMissing && (
+        <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 flex items-start gap-3">
+          <Database className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
+          <div className="text-xs text-blue-900 leading-relaxed flex-1">
+            <div className="flex items-center justify-between">
+              <p className="font-bold flex items-center gap-1.5">
+                <span>Supabase Live Announcement Integration</span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  RLS Protected
+                </span>
+              </p>
+              <button
+                type="button"
+                onClick={loadSavedSettings}
+                title="Refresh from Supabase"
+                className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100/60 transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <p className="text-blue-800/90 mt-0.5">
+              Updates saved here persist in the Supabase <code className="bg-blue-100/80 px-1 py-0.5 rounded font-mono font-bold">{ANNOUNCEMENT_SETTINGS_TABLE}</code> table and immediately update the public website announcement bar.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Live Preview Section */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
@@ -270,17 +455,21 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
               type="text"
               value={formData.announcementText}
               onChange={(e) => handleChange('announcementText', e.target.value)}
-              placeholder="e.g., Direct Flight Trichy to Jeddah · 15 Days Guided Pilgrimage"
+              placeholder="e.g., Direct Flight Trichy to Jeddah · 15 Days Guided Pilgrimage with South Indian Catering"
               className={`w-full px-3.5 py-2.5 text-xs rounded-xl border bg-white focus:outline-none focus:ring-2 transition-all ${
                 errors.announcementText
                   ? 'border-red-400 focus:ring-red-400'
                   : 'border-slate-300 focus:ring-[#2563EB] focus:border-[#2563EB]'
               }`}
             />
-            {errors.announcementText && (
+            {errors.announcementText ? (
               <p className="text-[11px] text-red-600 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>{errors.announcementText}</span>
+              </p>
+            ) : (
+              <p className="text-[11px] text-slate-500 mt-1">
+                Full description of the group departure, airline route, or pilgrimage details.
               </p>
             )}
           </div>
@@ -376,13 +565,19 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
                 Unsaved modifications in draft
               </span>
             )}
+            {!hasUnsavedChanges && (
+              <span className="text-[11px] text-slate-400">
+                Database state: <strong className="text-slate-600">{savedConfig.lastUpdated || 'Not saved'}</strong>
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <button
               type="button"
               onClick={handleReset}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors cursor-pointer"
+              disabled={isSaving}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors cursor-pointer disabled:opacity-50"
             >
               <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
               <span>Reset</span>
@@ -390,10 +585,20 @@ export const AnnouncementView: React.FC<AnnouncementViewProps> = ({
 
             <button
               type="submit"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 shadow-sm transition-all cursor-pointer"
+              disabled={isSaving}
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#2563EB] hover:bg-blue-700 shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
-              <Save className="w-3.5 h-3.5" />
-              <span>Save Changes</span>
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Saving to Supabase...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Save Changes</span>
+                </>
+              )}
             </button>
           </div>
         </div>

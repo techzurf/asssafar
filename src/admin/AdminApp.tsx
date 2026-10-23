@@ -17,6 +17,14 @@ import { PageRoute } from '../routes';
 import { useAdminAuth } from './auth/AdminAuthContext';
 import { UnauthorizedView } from './auth/UnauthorizedView';
 import { Loader2, ShieldCheck, Lock } from 'lucide-react';
+import { fetchAnnouncementSettings } from '../services/announcementService';
+import { 
+  fetchAdminPackages, 
+  createPackage, 
+  updatePackage, 
+  togglePackageStatus, 
+  deletePackage 
+} from '../services/packageService';
 
 interface AdminAppProps {
   onNavigate?: (route: PageRoute) => void;
@@ -45,11 +53,57 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
     }
   }, []);
 
-  // Announcement State (In-Memory Mock Session)
+  // Announcement State (Connected to Supabase with fallback)
   const [announcementState, setAnnouncementState] = useState<AnnouncementConfigState>(INITIAL_ANNOUNCEMENT_STATE);
 
-  // Packages State (In-Memory Mock Session)
+  // Fetch initial announcement state from Supabase
+  useEffect(() => {
+    let isMounted = true;
+    fetchAnnouncementSettings()
+      .then((result) => {
+        if (isMounted && result.data && result.isFromDatabase) {
+          setAnnouncementState(result.data);
+        }
+      })
+      .catch((err) => {
+        console.warn('AdminApp: could not fetch announcement settings:', err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Packages State (Connected to Supabase with fallback)
   const [packagesState, setPackagesState] = useState<AdminPackageItem[]>(INITIAL_ADMIN_PACKAGES);
+  const [isPackagesLoading, setIsPackagesLoading] = useState(true);
+  const [isPackagesDbConnected, setIsPackagesDbConnected] = useState(false);
+  const [isPackagesTableMissing, setIsPackagesTableMissing] = useState(false);
+
+  // Load packages from Supabase
+  const loadPackages = useCallback(async () => {
+    setIsPackagesLoading(true);
+    try {
+      const result = await fetchAdminPackages();
+      if (result.isTableMissing) {
+        setIsPackagesTableMissing(true);
+        setIsPackagesDbConnected(false);
+      } else if (result.error) {
+        setIsPackagesDbConnected(false);
+      } else {
+        setIsPackagesDbConnected(result.isFromDatabase);
+        setIsPackagesTableMissing(false);
+      }
+      setPackagesState(result.data);
+    } catch (err) {
+      console.warn('AdminApp: could not fetch packages:', err);
+    } finally {
+      setIsPackagesLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadPackages();
+  }, [loadPackages]);
 
   // Activity Log
   const [activityLogs, setActivityLogs] = useState<AdminActivityLog[]>(INITIAL_ACTIVITY_LOGS);
@@ -133,7 +187,7 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
   }
 
   // Save Announcement
-  const handleSaveAnnouncement = (newConfig: AnnouncementConfigState) => {
+  const handleSaveAnnouncement = useCallback((newConfig: AnnouncementConfigState) => {
     setAnnouncementState(newConfig);
 
     const newLog: AdminActivityLog = {
@@ -144,80 +198,104 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
       type: 'announcement',
     };
     setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
-  };
+  }, []);
 
-  // Add Package
-  const handleAddPackage = (newPkg: AdminPackageItem) => {
-    setPackagesState((prev) => [newPkg, ...prev]);
-
-    const newLog: AdminActivityLog = {
-      id: `act-${Date.now()}`,
-      action: 'Package Created',
-      target: newPkg.name,
-      timestamp: 'Just now',
-      type: 'package',
-    };
-    setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
-  };
-
-  // Update Package
-  const handleUpdatePackage = (updatedPkg: AdminPackageItem) => {
-    setPackagesState((prev) => prev.map((p) => (p.id === updatedPkg.id ? updatedPkg : p)));
-
-    const newLog: AdminActivityLog = {
-      id: `act-${Date.now()}`,
-      action: 'Package Modified',
-      target: updatedPkg.name,
-      timestamp: 'Just now',
-      type: 'package',
-    };
-    setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
-  };
-
-  // Delete Package
-  const handleDeletePackage = (id: string) => {
-    const target = packagesState.find((p) => p.id === id);
-    setPackagesState((prev) => prev.filter((p) => p.id !== id));
-
-    const newLog: AdminActivityLog = {
-      id: `act-${Date.now()}`,
-      action: 'Package Removed',
-      target: target ? target.name : id,
-      timestamp: 'Just now',
-      type: 'package',
-    };
-    setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
-  };
-
-  // Toggle Package Active Status
-  const handleTogglePackageStatus = (id: string) => {
-    setPackagesState((prev) =>
-      prev.map((p) => {
-        if (p.id === id) {
-          const nextStatus = p.status === 'active' ? 'inactive' : 'active';
-          return {
-            ...p,
-            status: nextStatus,
-            updatedAt: 'Just now',
-          };
-        }
-        return p;
-      })
-    );
-
-    const target = packagesState.find((p) => p.id === id);
-    if (target) {
-      const isNowActive = target.status === 'inactive';
+  // Add Package (Supabase)
+  const handleAddPackage = useCallback(async (newPkg: AdminPackageItem): Promise<boolean> => {
+    const result = await createPackage(newPkg, user?.email);
+    if (result.success && result.data) {
+      setPackagesState((prev) => [result.data!, ...prev.filter((p) => p.id !== result.data!.id)]);
       const newLog: AdminActivityLog = {
         id: `act-${Date.now()}`,
-        action: isNowActive ? 'Package Activated' : 'Package Deactivated',
+        action: 'Package Created',
+        target: result.data.name,
+        timestamp: 'Just now',
+        type: 'package',
+      };
+      setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
+      setIsPackagesDbConnected(true);
+      addToast('Package Created', `"${result.data.name}" has been saved to Supabase.`, 'success');
+      return true;
+    } else {
+      if (result.isTableMissing) {
+        setIsPackagesTableMissing(true);
+      }
+      addToast('Failed to Save', result.error || 'Could not save package to database.', 'warning');
+      return false;
+    }
+  }, [user?.email, addToast]);
+
+  // Update Package (Supabase)
+  const handleUpdatePackage = useCallback(async (updatedPkg: AdminPackageItem): Promise<boolean> => {
+    const result = await updatePackage(updatedPkg, user?.email);
+    if (result.success && result.data) {
+      setPackagesState((prev) => prev.map((p) => (p.id === result.data!.id ? result.data! : p)));
+      const newLog: AdminActivityLog = {
+        id: `act-${Date.now()}`,
+        action: 'Package Modified',
+        target: result.data.name,
+        timestamp: 'Just now',
+        type: 'package',
+      };
+      setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
+      setIsPackagesDbConnected(true);
+      addToast('Package Updated', `"${result.data.name}" has been updated in Supabase.`, 'success');
+      return true;
+    } else {
+      addToast('Failed to Update', result.error || 'Could not update package in database.', 'warning');
+      return false;
+    }
+  }, [user?.email, addToast]);
+
+  // Delete Package (Supabase)
+  const handleDeletePackage = useCallback(async (id: string): Promise<boolean> => {
+    const target = packagesState.find((p) => p.id === id);
+    const result = await deletePackage(id);
+    if (result.success) {
+      setPackagesState((prev) => prev.filter((p) => p.id !== id));
+      const newLog: AdminActivityLog = {
+        id: `act-${Date.now()}`,
+        action: 'Package Removed',
+        target: target ? target.name : id,
+        timestamp: 'Just now',
+        type: 'package',
+      };
+      setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
+      addToast('Package Deleted', `"${target ? target.name : id}" has been removed from Supabase.`, 'info');
+      return true;
+    } else {
+      addToast('Failed to Delete', result.error || 'Could not delete package.', 'warning');
+      return false;
+    }
+  }, [packagesState, addToast]);
+
+  // Toggle Package Active Status (Supabase)
+  const handleTogglePackageStatus = useCallback(async (id: string): Promise<boolean> => {
+    const target = packagesState.find((p) => p.id === id);
+    if (!target) return false;
+    const nextStatus = target.status === 'active' ? 'inactive' : 'active';
+    const result = await togglePackageStatus(id, nextStatus, user?.email);
+    if (result.success && result.data) {
+      setPackagesState((prev) => prev.map((p) => (p.id === id ? result.data! : p)));
+      const newLog: AdminActivityLog = {
+        id: `act-${Date.now()}`,
+        action: nextStatus === 'active' ? 'Package Activated' : 'Package Deactivated',
         target: target.name,
         timestamp: 'Just now',
         type: 'package',
       };
       setActivityLogs((prev) => [newLog, ...prev.slice(0, 9)]);
+      addToast(
+        nextStatus === 'active' ? 'Package Activated' : 'Package Deactivated',
+        `"${target.name}" is now ${nextStatus} in Supabase.`,
+        'success'
+      );
+      return true;
+    } else {
+      addToast('Failed to Update Status', result.error || 'Could not toggle package status.', 'warning');
+      return false;
     }
-  };
+  }, [packagesState, user?.email, addToast]);
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex flex-col antialiased selection:bg-[#2563EB] selection:text-white">
@@ -274,6 +352,10 @@ export const AdminApp: React.FC<AdminAppProps> = ({ onNavigate }) => {
               onShowToast={addToast}
               isAddModalOpenInitially={triggerAddPackageModal}
               onCloseAddModalInitially={() => setTriggerAddPackageModal(false)}
+              isLoading={isPackagesLoading}
+              isTableMissing={isPackagesTableMissing}
+              isDbConnected={isPackagesDbConnected}
+              onRefresh={loadPackages}
             />
           )}
         </main>
