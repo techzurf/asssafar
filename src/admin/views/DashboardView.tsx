@@ -7,10 +7,11 @@ import {
   Plus, 
   CheckCircle2, 
   AlertCircle,
-  Database,
   ExternalLink,
-  Layers,
-  Sparkles
+  Building2,
+  Phone,
+  MapPin,
+  ShieldCheck
 } from 'lucide-react';
 import { AnnouncementConfigState, AdminPackageItem, AdminActivityLog, AdminTab } from '../types/adminTypes';
 
@@ -54,19 +55,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
         {/* Status Notice Capsule */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
-          <div className="px-3.5 py-2 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-800">
+          <div className="px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800">
             <div className="flex items-center gap-1.5 font-bold">
-              <Database className="w-3.5 h-3.5 text-blue-600" />
-              <span>Announcement & Packages: Live Supabase Backend</span>
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>System Operational</span>
             </div>
-            <p className="text-[11px] text-blue-700/90 mt-0.5">
-              Public website and admin operations synced with database
+            <p className="text-[11px] text-emerald-700/90 mt-0.5">
+              Live updates synced across website & portal
             </p>
           </div>
         </div>
       </div>
 
-      {/* 3 Summary Cards (Strict requirement #3) */}
+      {/* 3 Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* Card 1: Announcement Bar Status */}
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-slate-300 transition-all">
@@ -168,12 +169,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           <p className="text-xs text-slate-500 mt-2">
-            Synchronized with Supabase announcement settings
+            Synchronized with announcement settings
           </p>
 
           <div className="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
             <span className="text-slate-600">Operator:</span>
-            <span className="font-semibold text-slate-800">Admin User (Demo)</span>
+            <span className="font-semibold text-slate-800">Authorized Administrator</span>
           </div>
         </div>
       </div>
@@ -188,7 +189,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
                 Quick Actions
               </h3>
-              <span className="text-xs text-slate-400">Phase 1 Controls</span>
+              <span className="text-xs text-slate-400">Management Shortcuts</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -250,7 +251,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigateTab('packages')}
-                className="text-xs font-semibold text-[#2563EB] hover:underline"
+                className="text-xs font-semibold text-[#2563EB] hover:underline cursor-pointer"
               >
                 View all ({totalPackagesCount})
               </button>
@@ -284,15 +285,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Activity Feed & Supabase Readiness */}
+        {/* Right Column: Recent Activity & Operations Details */}
         <div className="space-y-6">
-          {/* Recent Mock Activity Log */}
+          {/* Recent Operations Activity Log */}
           <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">
                 Recent Activity
               </h3>
-              <span className="text-[11px] text-slate-400">Mock Log</span>
+              <span className="text-[11px] text-slate-400">System Audit</span>
             </div>
 
             <div className="space-y-4">
@@ -325,39 +326,39 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
           </div>
 
-          {/* Phase 2 Supabase Integration Architecture Card */}
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-md border border-slate-700/80">
-            <div className="flex items-center gap-2 mb-2">
-              <Layers className="w-4 h-4 text-emerald-400" />
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                Phase 2 Ready
-              </span>
+          {/* Operations & Office Information Card */}
+          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs text-slate-800">
+            <div className="flex items-center gap-2 mb-3">
+              <Building2 className="w-4 h-4 text-[#2563EB]" />
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+                Office & Operations Information
+              </h4>
             </div>
-            <h4 className="text-sm font-bold text-white mb-1.5">
-              Supabase Architecture
-            </h4>
-            <p className="text-xs text-slate-300 leading-relaxed mb-4">
-              The data structures for Announcements and Packages are isolated into typed mock modules ready to map cleanly to PostgreSQL tables.
-            </p>
 
-            <ul className="text-[11px] text-slate-300 space-y-1.5 mb-4">
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                <span><code className="text-blue-300 font-mono">announcements</code> single-row configuration</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                <span><code className="text-blue-300 font-mono">umrah_packages</code> CRUD table with RLS</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                <span>Supabase Auth for authenticated admin users</span>
-              </li>
-            </ul>
+            <div className="space-y-3 text-xs">
+              <div className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-slate-900">Trichy Operations Center</p>
+                  <p className="text-slate-500 text-[11px]">Cantonment, Tiruchirappalli, Tamil Nadu</p>
+                </div>
+              </div>
 
-            <div className="pt-3 border-t border-slate-700/70 text-[10px] text-slate-400 flex items-center justify-between">
-              <span>Status: Frontend UI Complete</span>
-              <span className="font-semibold text-slate-300">Phase 1 / 2</span>
+              <div className="flex items-start gap-2.5">
+                <Phone className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-slate-900">Direct Helpline</p>
+                  <p className="text-slate-500 font-mono text-[11px]">+91 95663 69654</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-slate-900">Pilgrimage Services</p>
+                  <p className="text-slate-500 text-[11px]">Direct flights from Trichy to Saudi Arabia with scholar accompaniment and South Indian catering.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

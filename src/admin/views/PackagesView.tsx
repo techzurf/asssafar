@@ -163,7 +163,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
       isDestructive: true,
       action: () => {
         onDeletePackage(pkg.id);
-        onShowToast('Package Removed', `"${pkg.name}" has been deleted from local session.`, 'warning');
+        onShowToast('Package Removed', `"${pkg.name}" has been deleted.`, 'warning');
         setConfirmDialog((prev) => ({ ...prev, isOpen: false }));
       },
     });
@@ -181,7 +181,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
         <Loader2 className="w-8 h-8 text-[#2563EB] animate-spin mx-auto" />
         <h3 className="text-sm font-bold text-slate-800">Fetching Umrah Packages</h3>
         <p className="text-xs text-slate-500 max-w-sm mx-auto">
-          Loading package inventory from Supabase database table...
+          Loading package inventory from database...
         </p>
       </div>
     );
@@ -201,8 +201,8 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
               </span>
             </div>
             <p className="text-amber-800 mt-1">
-              The Supabase database has not had the <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-semibold">umrah_packages</code> table created yet.
-              Please execute the provided SQL migration in your <strong>Supabase Dashboard &gt; SQL Editor</strong> to enable package persistence and RLS security.
+              The database table <code className="bg-amber-100 px-1 py-0.5 rounded font-mono font-semibold">umrah_packages</code> has not been created yet.
+              Please execute the provided SQL migration in your <strong>Supabase Dashboard &gt; SQL Editor</strong> to enable package persistence.
             </p>
             {onRefresh && (
               <div className="mt-2.5 flex items-center gap-2">
@@ -226,17 +226,17 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
           <div className="text-xs text-blue-900 leading-relaxed flex-1">
             <div className="flex items-center justify-between">
               <p className="font-bold flex items-center gap-1.5">
-                <span>Supabase Live Umrah Packages Integration</span>
+                <span>Live Package Inventory Synchronization</span>
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
                   <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                  RLS Protected
+                  Secured & Active
                 </span>
               </p>
               {onRefresh && (
                 <button
                   type="button"
                   onClick={onRefresh}
-                  title="Refresh packages from Supabase"
+                  title="Refresh package inventory"
                   className="text-blue-600 hover:text-blue-800 p-1 rounded hover:bg-blue-100/60 transition-colors cursor-pointer"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
@@ -244,7 +244,7 @@ export const PackagesView: React.FC<PackagesViewProps> = ({
               )}
             </div>
             <p className="text-blue-800/90 mt-0.5">
-              Packages created, edited, or toggled here persist in the Supabase <code className="bg-blue-100/80 px-1 py-0.5 rounded font-mono font-bold">umrah_packages</code> table. Active packages automatically appear on the public website.
+              Packages created, edited, or updated here are saved directly to the database. Active packages automatically appear on the public website.
             </p>
           </div>
         </div>
